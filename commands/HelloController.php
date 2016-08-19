@@ -8,6 +8,8 @@
 namespace app\commands;
 
 use yii\console\Controller;
+use yii\log\Logger;
+use Yii;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -26,5 +28,11 @@ class HelloController extends Controller
     public function actionIndex($message = 'hello world')
     {
         echo $message . "\n";
+        $log =\Yii::$app->getLog();
+        $logger = $log->getLogger();
+        $logger->log('catcat', Logger::LEVEL_INFO);
+        $logger->log('catcat', Logger::LEVEL_INFO);
+        $logger->log('catcat', Logger::LEVEL_INFO);
+        $logger->log('catcat', Logger::LEVEL_INFO);
     }
 }
