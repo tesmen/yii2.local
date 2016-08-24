@@ -5,7 +5,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'modules' => [
-        'module' => [
+        'forum' => [
             'class' => 'app\modules\forum\Module',
         ],
     ],
