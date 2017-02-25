@@ -10,8 +10,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'pgsql:host=localhost;port=5432;dbname=test_database',
-    'username'=>'test_user',
-    'password'=>'qwerty',
+    'dsn' => 'pgsql:host=localhost;port=5432;dbname=velovito',
+    'username'=>'velo_user',
+    'password'=>'password',
     'charset'=>'UTF8',
 ];
