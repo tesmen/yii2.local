@@ -1,17 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace app\commands;
 
 use app\models\TmPart;
 use yii\console\Controller;
-use yii\log\Logger;
-use Yii;
-
 
 class InsertTmPartsController extends Controller
 {
@@ -19,9 +11,17 @@ class InsertTmPartsController extends Controller
     {
         $data = $this->parseCsvFile($filename);
 
-        foreach($data as $row){
+        foreach ($data as $row) {
+            if (empty($row[7])) {
+                continue;
+            }
+
             $rec = new TmPart();
-            $rec->name = iconv('UTF8', 'UTF8', mb_strtolower($row[7]));
+            $rec->ident_ved = mb_strtolower($row[1]);
+            $rec->kod = mb_strtolower($row[3]);
+            $rec->poz_ved = mb_strtolower($row[4]);
+            $rec->obozn = mb_strtolower($row[6]);
+            $rec->name = mb_strtolower($row[7]);
             $rec->save();
         }
     }
