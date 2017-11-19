@@ -19,13 +19,14 @@ class Entity extends ActiveRecord
     {
         $e = new static();
 
-        $e->title = $title;
+        $e->name = $title;
+        $e->params = $title;
         $e->save();
 
     }
 
     public static function tableName()
     {
-        return '{{my_table}}';
+        return '{{tm_parts}}';
     }
 }

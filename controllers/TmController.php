@@ -66,6 +66,9 @@ class TmController extends Controller
     {
         $this->layout;
 
+        \app\models\Entity::create('asd');
+
+
         return $this->render('index');
     }
 
