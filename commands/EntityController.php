@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\models\Entity;
+use app\models\TmPart;
 use yii\console\Controller;
 use yii\log\Logger;
 use Yii;
@@ -11,8 +11,8 @@ class EntityController extends Controller
 {
     public function actionIndex()
     {
-        Entity::create('daaaaaa!!!');
-        var_dump(sizeof( Entity::find()->all()));
+        TmPart::create('daaaaaa!!!');
+        var_dump(sizeof( TmPart::find()->all()));
     }
 
     public function actionLog($message = 'hello world')

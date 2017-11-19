@@ -66,10 +66,10 @@ class TmController extends Controller
     {
         $this->layout;
 
-        \app\models\Entity::create('asd');
+        \app\models\TmPart::create('asd');
 
 
-        return $this->render('index');
+        return $this->render('tm');
     }
 
     /**

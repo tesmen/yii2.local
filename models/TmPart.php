@@ -5,22 +5,25 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 /**
- * Class Entity
+ * Class TmPart
  * @package app\models
- * @property int $id
- * @property int $title
- * @property int $data
- * @property int $created
- * @property int $comment
+ *
+ * @property $id
+ * @property $name
+ * @property $ident_ved
+ * @property $kod
+ * @property $poz_ved
+ * @property $obozn
+ *
  */
-class Entity extends ActiveRecord
+class TmPart extends ActiveRecord
 {
     public static function create($title)
     {
         $e = new static();
 
         $e->name = $title;
-        $e->params = $title;
+        $e->ob = $title;
         $e->save();
 
     }
