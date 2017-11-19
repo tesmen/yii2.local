@@ -13,6 +13,8 @@ use app\assets\AppAsset;
 AppAsset::register($this);
 
 \app\models\AssetManager::instance()
+    ->getJquery()
+    ->getCommonJs()
     ->getAngular16()
     ->getAdminForms()
     ->getAngularRoute()
@@ -26,6 +28,8 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <link rel="stylesheet" href="/static/css/common.css">
+
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
@@ -39,7 +43,7 @@ AppAsset::register($this);
     <?php
     NavBar::begin(
         [
-            'brandLabel' => 'My Company',
+            'brandLabel' => 'VZ Meetings',
             'brandUrl'   => Yii::$app->homeUrl,
             'options'    => [
                 'class' => 'navbar-inverse navbar-fixed-top',

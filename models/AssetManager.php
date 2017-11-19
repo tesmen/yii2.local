@@ -84,6 +84,16 @@ class AssetManager
         }
     }
 
+    public function getJquery()
+    {
+        return $this->addAsset('<script src="/static/js/jquery-3.2.1.min.js"></script>');
+    }
+
+    public function getCommonJs()
+    {
+        return $this->addAsset('<script src="/static/js/common.js"></script>');
+    }
+
     public function getAngular16()
     {
         return $this->addAsset('<script src="/static/js/angular.js"></script>');
