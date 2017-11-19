@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" ng-disabled="loading">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <h4 class="modal-title">{{ i18n['modal_title']}}</h4>
+</div>
+
+
+<!-- confirm by text template -->
+
+<!--<div class="modal-body">-->
+    <!--<div class="blinder blinder-40" ng-show="loading"></div>-->
+<!---->
+    <!--<div class="row">-->
+        <!--<div class="col-xs-12">-->
+            <!--<div class="form-group">-->
+                <!--<label for="title">{{ i18n['title']}}</label>-->
+                <!--<input type="text" class="form-control" id="title" ng-model="template.title">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">{{ i18n['cancel']}}</button>
+    <button type="button" class="btn btn-danger" ng-click="close()">{{ i18n['delete']}}</button>
+</div>

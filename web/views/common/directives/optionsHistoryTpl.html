@@ -1,0 +1,94 @@
+<div ng-repeat="(id, option) in options" ng-click="selectOption(id, $event)" class="option row closed-and-showed-{{option.showed && option.closed}}"
+     data-toggle="modal" data-target="#optionModal">
+    <div class="order-time col-xs-3">
+        {{ option.expired*1000 | date:'HH:mm' }}
+        <strong class="order-close show-{{!option.showed && option.closed}}">{{ ::'front.complete' | i18n }}</strong>
+    </div>
+    <div class="col-xs-9">
+        <div class="order-info row">
+            <div class="col-xs-9">{{option.active}}</div>
+            <strong class="pull-right col-xs-3">{{option.sum_profit}}{{option.currency_char}}</strong>
+        </div>
+        <div class="order-bids row">
+            <div ng-repeat="order in option.orders" class="order-bid col-xs-4 order-{{order.type}}">
+                <i class="fa fa-arrow-right fa-rotate-{{order.type}}"></i>{{order.profit}}{{option.currency_char}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" data-backdrop="false" id="optionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close fa-3x" data-dismiss="modal" ng-click="deselectOption">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">{{ options[modal].active }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-6">{{ 'common.Date and Time' | i18n }}</div>
+                    <div class="col-xs-6 text-right">
+                        <strong>{{ options[modal].expired*1000 | date:'d.MM.yy H:mm:ss' }}</strong>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">{{ ::'front.expiration level' | i18n }}</div>
+                    <div class="col-xs-6 text-right">
+                        <strong>{{ options[modal].axp_value }}</strong>
+                    </div>
+                </div>
+                <table class="table table-condensed orders">
+                    <thead>
+                    <tr>
+                        <th>{{ ::'front.level' | i18n }}</th>
+                        <th class="text-center">{{ ::'front.investition' | i18n }}</th>
+                        <th class="text-right">{{ ::'front.profit' | i18n }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="order in options[modal].orders" class="order-{{order.type}}">
+                        <td><i class="fa fa-arrow-right fa-rotate-{{order.type}}"></i>{{ order.open_val }}</td>
+                        <td class="text-center">{{ order.invest }}{{options[modal].currency_char}}</td>
+                        <td class="text-right">
+                            <strong class="plus-{{order.profit>0}}">
+                                {{ order.profit }}{{options[modal].currency_char}}
+                            </strong>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="row text-center">
+                    <strong>{{ ::'front.total' | i18n }}</strong><br>
+                    <strong class="profit plus-{{options[modal].sum_profit>0}}">{{ options[modal].sum_profit }}{{options[modal].currency_char}}</strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-9">
+                    <div class="col-xs-12 share">
+                        {{ ::'front.profit more' | i18n }}: <a href="#" data-toggle="tooltip"
+                                                         class="toggle glyphicon glyphicon-question-sign"
+                                                         title="blah blah blah"></a>
+                    </div>
+                    <div class="col-xs-5 social-btn">
+                        <span class="fa-stack fa-lg">
+                          <i class="fa fa-square fa-stack-2x fb-square"></i>
+                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                        </span>Facebook
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-2 social-btn">
+                        <span class="fa-stack fa-lg">
+                          <i class="fa fa-square fa-stack-2x vk-square"></i>
+                          <i class="fa fa-vk fa-stack-1x fa-inverse"></i>
+                        </span>Вконтакте
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" ng-click="deselectOption()">Ok</button>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label>{{ selectTitle }}</label>
+
+    <select class="form-control" name="locale_id" id="locale_select"
+            ng-model="outputModel"
+            ng-options="i.id as i.name for i in options">
+    </select>
+</div>

@@ -1,0 +1,19 @@
+<div class="popover intro-popover" ng-class="popoverClass" role="tooltip">
+    <div class="arrow"></div>
+    <h3 class="popover-title"></h3>
+    <h3 class="intro-popover-title" ng-class="{ 'rtl-rev-main': $root.lang.current.key == 'ar_KW' }"><span class="rtl-rev2" ng-show="title" ng-bind-html="title | i18n"></span></h3>
+    <div class="popover-content"></div>
+    <div class="intro-popover-content" ng-class="{ 'rtl-rev-main': $root.lang.current.key == 'ar_KW' }">
+        <div class="text"><span class="rtl-rev2" ng-bind-html="text | i18n"></span></div>
+        <div class="buttons pull-left clearboth">
+            <div class="pull-left">
+                <a href="#" ng-click="close()" tt="skipButton.tooltip || ''" ng-show="step == stepsLength" ng-disabled="skipButton.disabled" class="close-link"><span class="rtl-rev2">{{ doneButton.label | i18n }}</span></a>
+                <a href="#" ng-click="close()" tt="skipButton.tooltip || ''" ng-show="skipButton && step != stepsLength" ng-disabled="skipButton.disabled" class="close-link"><span class="rtl-rev2">{{ skipButton.label | i18n }}</span></a>
+            </div>
+            <div class="pull-right">
+                <div class="btn-intro-prev-wrapper" tt="prevButton.tooltip || ''" tt-place="prevButton.tooltipPosition || 'auto'"><button ng-click="prevStep(false, true)"  ng-show="prevButton !== false" ng-disabled="prevButton.disabled" class="btn btn-intro-prev btn-danger"><span class="rtl-rev2">{{ prevButton.label | i18n }}</span></button></div>
+                <div class="btn-intro-next-wrapper" tt="nextButton.tooltip || ''" tt-place="nextButton.tooltipPosition || 'auto'"><button ng-click="nextStep(false, true)"  ng-show="nextButton !== false" ng-disabled="nextButton.disabled" class="btn btn-intro-next btn-success"><span class="rtl-rev2">{{ nextButton.label | i18n }}</span></button></div>
+            </div>
+        </div>
+    </div>
+</div>

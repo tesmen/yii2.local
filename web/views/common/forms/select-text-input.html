@@ -1,0 +1,17 @@
+<div class="control-group">
+    <label class="control-label name" ng-show="labelText">
+        {{labelText}}
+    </label>
+
+    <div class="controls">
+        <ui-select ng-model="innerModel.value">
+            <ui-select-match allow-clear="true" placeholder="{{placeholder}}">
+                <span ng-bind="$select.selected[display]"></span>
+            </ui-select-match>
+
+            <ui-select-choices repeat="item[trackBy] as item in (options | filter: $select.search) track by item[trackBy]">
+                <span ng-bind-html="item[display] | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>

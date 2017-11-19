@@ -1,0 +1,17 @@
+<div class="btn-group dropdown">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <span class="title">&nbsp;</span><span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li>
+            <a ng-show="search" href="#" class="search" ng-click="preventClick($event)">
+                <input type="text" class="form-control rtl-rev2" ng-model="searchText" placeholder="{{ ::'front.search' | i18n }}">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-main dropdown-menu-sub" ng-class="{ 'dropdown-menu-search': search }" role="menu" ng-transclude></ul>
+            <ul ng-show="findCount == 0" class="dropdown-menu dropdown-menu-main dropdown-menu-sub" role="menu">
+                <li class="not-found">{{ ::'front.nothing search result' | i18n }}</li>
+            </ul>
+
+        </li>
+    </ul>
+</div>

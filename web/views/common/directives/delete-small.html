@@ -1,0 +1,24 @@
+<span class="delete-menu-group">
+    <span ng-show="!showConfirmButton">
+        <button href="" class="btn btn-xs btn-success" style="opacity: 0; cursor: default">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+        </button>
+
+        <button class="btn btn-xs btn-danger" ng-click="needConfirm? showConfirmButton = !showConfirmButton : onDelete()"
+                ng-disabled="isDisabled">
+        <i class="glyphicon" ng-class="deleteIconClass ? deleteIconClass : 'glyphicon-trash'" ></i>
+        </button>
+    </span>
+
+    <span ng-show="showConfirmButton">
+        <button href="" class="btn btn-xs btn-danger" ng-click="deleteClicked(); showConfirmButton = false;">
+            <i class="glyphicon" ng-class="deleteIconClass ? deleteIconClass : 'glyphicon-trash'"></i>
+        </button>
+
+        <button href="" class="btn btn-xs btn-success" ng-click="showConfirmButton = !showConfirmButton">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+        </button>
+
+    </span>
+</span>
+

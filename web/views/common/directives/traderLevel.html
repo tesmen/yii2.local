@@ -1,0 +1,13 @@
+<div class="trader-level">
+    <div class="level pull-left">{{ $root.user.profile.level.num || '2' }}</div>
+    <span class="rank">{{ $root.user.profile.level.rank || 'Trader Expert' }}</span>
+    <span class="level-exp" >
+        {{ $root.user.profile.level.exp || '$ 1200' }} /
+    </span>
+    <span class="next-level-exp">
+        {{ $root.user.profile.level.nextLevelExp || '$ 5000' }} $
+    </span>
+    <div class="level-progress">
+        <div style="width: {{ $root.user.profile.level.exp*100 / $root.user.profile.level.nextLevelExp }}%;"></div>
+    </div>
+</div>
