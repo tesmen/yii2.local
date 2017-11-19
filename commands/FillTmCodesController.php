@@ -2,11 +2,11 @@
 
 namespace app\commands;
 
-use app\models\PartsRecognizer\Recognizer;
+use app\models\PartsRecognizer;
 use app\models\TmPart;
 use yii\console\Controller;
 
-class InsertTmPartsController extends Controller
+class FillTmCodesController extends Controller
 {
     public function actionIndex($filename)
     {
@@ -17,7 +17,7 @@ class InsertTmPartsController extends Controller
                 continue;
             }
 
-            $recognizedpart = Recognizer::parseDetail($row[7]);
+            $recognized = PartsRecognizer::
 
             $rec = new TmPart();
             $rec->ident_ved = mb_strtolower($row[1]);

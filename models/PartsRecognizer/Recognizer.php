@@ -1,9 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\models\PartsRecognizer;
 
 
-class PartsRecognizer
+class Recognizer
 {
     /**
      * PartsRecognizer constructor.
@@ -19,5 +19,15 @@ class PartsRecognizer
      */
     public function recognize()
     {
+    }
+
+    public static function parseDetail($str)
+    {
+        $obj = new RecognizedDetail();
+
+        $dn = preg_match();
+
+        $obj->dn = mb_strpos($str);
+
     }
 }

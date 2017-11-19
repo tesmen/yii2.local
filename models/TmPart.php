@@ -9,11 +9,15 @@ use yii\db\ActiveRecord;
  * @package app\models
  *
  * @property $id
+ * @property $raw_name
  * @property $name
  * @property $ident_ved
  * @property $kod
  * @property $poz_ved
  * @property $obozn
+ * @property $pn
+ * @property $dn
+ * @property $rmrs
  *
  */
 class TmPart extends ActiveRecord
@@ -22,7 +26,7 @@ class TmPart extends ActiveRecord
     {
         $e = new static();
 
-        $e->name = $title;
+        $e->raw_name = $title;
         $e->ob = $title;
         $e->save();
 
