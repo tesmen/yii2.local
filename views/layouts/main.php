@@ -54,6 +54,8 @@ AppAsset::register($this);
         [
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items'   => [
+                ['label' => 'TM', 'url' => ['/tm']],
+                ['label' => 'Meetings', 'url' => ['/meetings']],
                 Yii::$app->user->isGuest
                     ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
