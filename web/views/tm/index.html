@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-xs-3">
+        <div class="row">
+            <div class="col-xs-9">
+                <span style="font-size: 20px">Categories</span>
+            </div>
+            <div class="col-xs-3 text-right">
+                <edit-button click-callback="editCategories()"></edit-button>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-xs-12">
+                <div class="list-group">
+                    <button type="button" class="list-group-item" ng-repeat="category in categories">
+                        {{category.name}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-9">
+        <div class="row">
+            <div class="col-xs-6">
+                <span style="font-size: 20px">Events: {{monthNames[currentMonthNumber]}}</span>
+
+            </div>
+            <div class="col-xs-6 text-right">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            id="dropdownMenu1" data-toggle="dropdown">
+                        {{monthNames[currentMonthNumber]}}
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                        <li ng-repeat="(mid, month) in monthNames">
+                            <a href ng-click="setCurrentMonthNumber(mid)">{{month}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row top-buffer" style="height: 75%; max-height: 75%; overflow: scroll">
+            <div class="col-xs-12 well well-sm" ng-repeat="day in monthDaysList">
+                {{day}}
+                <add-button class="pull-right"></add-button>
+            </div>
+        </div>
+
+    </div>
+</div>

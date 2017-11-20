@@ -20,7 +20,8 @@ AppAsset::register($this);
     ->getAngularRoute()
     ->getAngularSanitize()
     ->getAngularSelect()
-    ->getApplication()
+    ->getMeetingsApplication()
+    ->getTmApplication()
     ->flush()
 ?>
 
@@ -50,6 +51,19 @@ AppAsset::register($this);
             ],
         ]
     );
+    $login = ['label' => 'Login', 'url' => ['/site/login']];
+
+    $else = (
+        '<li>'
+        . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+        . Html::submitButton(
+            'Logout (' . Yii::$app->user->identity->username . ')',
+            ['class' => 'btn btn-link']
+        )
+        . Html::endForm()
+        . '</li>'
+    );
+
     echo Nav::widget(
         [
             'options' => ['class' => 'navbar-nav navbar-right'],
@@ -57,19 +71,8 @@ AppAsset::register($this);
                 ['label' => 'TM', 'url' => ['/tm']],
                 ['label' => 'Meetings', 'url' => ['/meetings']],
                 Yii::$app->user->isGuest
-                    ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-                )
-                    : (
-                    '<li>'
-                    . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'btn btn-link']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-                ),
+                    ? $login
+                    : $else,
             ],
         ]
     );

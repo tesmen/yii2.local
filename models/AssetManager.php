@@ -104,11 +104,18 @@ class AssetManager
         return $this->addAsset('<script src="/static/js/angular-sanitize.js"></script>');
     }
 
-    public function getApplication()
+    public function getMeetingsApplication()
     {
         return $this
             ->addAsset('<script src="/static/js/meetings-config.js"></script>')
             ->addAsset('<script src="/static/js/meetings-app.js"></script>');
+    }
+
+    public function getTmApplication()
+    {
+        return $this
+            ->addAsset('<script src="/static/js/tm-config.js"></script>')
+            ->addAsset('<script src="/static/js/tm-app.js"></script>');
     }
 
     public function getAngularNotify()

@@ -66,9 +66,6 @@ class TmController extends Controller
     {
         $this->layout;
 
-        \app\models\TmPart::create('asd');
-
-
         return $this->render('tm');
     }
 
