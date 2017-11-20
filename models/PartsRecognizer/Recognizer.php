@@ -21,6 +21,9 @@ class Recognizer
     {
     }
 
+    /**
+     * @param $str
+     */
     public static function parseDetail($str)
     {
         $obj = new RecognizedDetail();

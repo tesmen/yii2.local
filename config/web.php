@@ -13,8 +13,10 @@ $config = [
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'yii2',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser', // required for POST input via `php://input`
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

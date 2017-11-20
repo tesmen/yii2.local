@@ -17,12 +17,12 @@ class TmPartType extends ActiveRecord
 {
     public static function create($title)
     {
-        $e = new static();
+        $rec = new static();
+        $rec->name = $title;
+        $rec->synonyms = $title;
+        $rec->save();
 
-        $e->name = $title;
-        $e->synonyms = $title;
-        $e->save();
-
+        return $rec;
     }
 
     public static function tableName()

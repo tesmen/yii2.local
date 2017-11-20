@@ -21,7 +21,6 @@ AppAsset::register($this);
     ->getAngularSanitize()
     ->getAngularSelect()
     ->getMeetingsApplication()
-    ->getTmApplication()
     ->flush()
 ?>
 

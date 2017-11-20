@@ -2,132 +2,44 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\captcha\CaptchaAction;
-use yii\filters\AccessControl;
+use app\entity\TmPartType;
+use app\traits\ControllerTrait;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
-use yii\web\ErrorAction;
 
 class TmController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+    use ControllerTrait;
+
+    public function actionPartTypes()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only'  => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow'   => true,
-                        'roles'   => ['@'],
-                    ],
-                ],
-            ],
-            'verbs'  => [
-                'class'   => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+        return $this->render('tm-part-types');
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function actions()
+    public function actionGetPartTypes()
     {
-        return [
-            'error'   => [
-                'class' => ErrorAction::class,
-            ],
-            'captcha' => [
-                'class'           => CaptchaAction::class,
-                'fixedVerifyCode' => YII_ENV_TEST
-                    ? 'testme'
-                    : null,
-            ],
-        ];
+        return $this->asJson(
+            ['data' => TmPartType::find()->all()]
+        );
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
+    public function actionCreatePartType()
     {
-        $this->layout;
+        $name = $this->getRequestParams('name');
 
-        return $this->render('tm');
+        return $this->asJson(TmPartType::create($name));
     }
 
-    /**
-     * Login action.
-     *
-     * @return string
-     */
-    public function actionLogin()
+    public function actionTogglePartTypeActive()
     {
-        if (!Yii::$app->user->isGuest) {
+        $name = $this->getRequestParams('id');
+
+        return $this->asJson(TmPartType::create($name));
+    }
+
+    public function actionPost()
+    {
+        if (\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return string
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

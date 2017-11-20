@@ -1,3 +1,8 @@
+function httpConfig($httpProvider){
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
+}
+
 function range(start, count) {
     return Array.apply(0, Array(count))
         .map(function (element, index) {

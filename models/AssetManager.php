@@ -111,13 +111,6 @@ class AssetManager
             ->addAsset('<script src="/static/js/meetings-app.js"></script>');
     }
 
-    public function getTmApplication()
-    {
-        return $this
-            ->addAsset('<script src="/static/js/tm-config.js"></script>')
-            ->addAsset('<script src="/static/js/tm-app.js"></script>');
-    }
-
     public function getAngularNotify()
     {
         return $this
