@@ -2,3 +2,4 @@
 composer.phar
 /runtime
 /.idea
+/config/db.php
