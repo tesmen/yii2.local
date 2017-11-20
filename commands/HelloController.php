@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use app\entity\TmPart;
 use yii\console\Controller;
 use yii\log\Logger;
 use Yii;
@@ -27,12 +28,7 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        echo $message . "\n";
-        $log =\Yii::$app->getLog();
-        $logger = $log->getLogger();
-        $logger->log('catcat', Logger::LEVEL_INFO);
-        $logger->log('catcat', Logger::LEVEL_INFO);
-        $logger->log('catcat', Logger::LEVEL_INFO);
-        $logger->log('catcat', Logger::LEVEL_INFO);
+        $a = TmPart::findOne(['kod' => '129598310310093']);
+        var_export($a);
     }
 }

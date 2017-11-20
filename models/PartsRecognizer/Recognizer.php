@@ -3,6 +3,8 @@
 namespace app\models\PartsRecognizer;
 
 
+use app\entity\TmPartType;
+
 class Recognizer
 {
     /**
@@ -26,11 +28,9 @@ class Recognizer
      */
     public static function parseDetail($str)
     {
-        $obj = new RecognizedDetail();
+        $partTypes = TmPartType::find()->all();
 
-        $dn = preg_match();
-
-        $obj->dn = mb_strpos($str);
-
+        var_export($partTypes);
+        die;
     }
 }

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dev
- * Date: 10/8/14
- * Time: 8:02 PM
- */
 
 namespace app\util;
-
 
 class StringHelper {
 
