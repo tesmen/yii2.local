@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property $pn
  * @property $dn
  * @property $rmrs
+ * @property $part_type_id
  *
  */
 class TmPart extends ActiveRecord
