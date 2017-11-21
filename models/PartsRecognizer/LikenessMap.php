@@ -10,10 +10,17 @@ class LikenessMap
     private $partsOfSameType;
     private $partsMetaData;
 
-    public function __construct($partTypeId)
+    public function __construct($partTypeId, $materialId = null)
     {
         $this->partType = $partTypeId;
-        $this->partsOfSameType = TmPart::findAll(['part_type_id' => $partTypeId]);
+
+        $criteria = ['part_type_id' => $partTypeId];
+
+        if ($materialId) {
+            $criteria['material_id'] = $materialId;
+        }
+
+        $this->partsOfSameType = TmPart::findAll($criteria);
 
         foreach ($this->partsOfSameType as $type) {
             $words = PartNameStripper::stripToArray($type->raw_name);

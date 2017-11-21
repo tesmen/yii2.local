@@ -30,8 +30,8 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        $a = \app\models\PartsRecognizer\PartMaterialDetector::detect(
-            'Штуцер ввертной с цапковым концом  под трубную резьбу G3/8-M27x1.5 бронзовый Ду10, Ру16'
+        $a = \app\models\PartsRecognizer\PartPnDetector::instance()->detect(
+            'фланец трубный плоский приварной стальной Ду25 Ру16'
         );
         var_export($a);
     }
