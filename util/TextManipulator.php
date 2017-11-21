@@ -1,6 +1,7 @@
 <?php
 
-namespace Techy\Lib\Core\Utilities;
+namespace app\util;
+
 
 class TextManipulator
 {
@@ -185,5 +186,11 @@ class TextManipulator
         $this->outputText = mb_substr($this->outputText, $start, $length);
 
         return $this;
+    }
+
+    public static function isWord($input)
+    {
+        return preg_match('/^([a-zA-Zа-яА-Я]+)/i', $input) === 1;
+
     }
 }

@@ -10,11 +10,6 @@ trait ConsoleParamsTrait
     private $consoleArgs = [];
     private $consoleOptions = [];
 
-    public function __construct($args)
-    {
-        $this->loadConsoleParams($args);
-    }
-
     /**
      * @param string $msg
      */
@@ -25,25 +20,6 @@ trait ConsoleParamsTrait
         echo PHP_EOL;
     }
 
-    /**
-     * @param $data
-     */
-    private function loadConsoleParams($data)
-    {
-        $this->consoleRawInput = $data;
-
-        foreach ($data as $arg) {
-            switch (substr_count($arg, '=')) {
-                case 1:
-                    list($key, $value) = explode('=', $arg);
-                    $this->consoleArgs[$key] = $value;
-                    break;
-                case 0:
-                    $this->consoleOptions[] = $arg;
-                    break;
-            }
-        }
-    }
 
     /**
      * @param int $num

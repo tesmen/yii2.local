@@ -49,6 +49,9 @@
         };
 
         $scope.getPartTypes = function () {
+            $scope.partName = '';
+
+
             $http
                 .get('/tm/get-part-types')
                 .then(function (response) {

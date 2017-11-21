@@ -8,6 +8,7 @@
 namespace app\commands;
 
 use app\entity\TmPart;
+use app\util\TextManipulator;
 use yii\console\Controller;
 use yii\log\Logger;
 use Yii;
@@ -28,7 +29,8 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        $a = TmPart::findOne(['kod' => '129598310310093']);
+//        $a = TextManipulator::isWord('dxd/1012х58мм');
+        $a = TextManipulator::isWord('dxd');
         var_export($a);
     }
 }

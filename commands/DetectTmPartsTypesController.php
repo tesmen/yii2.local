@@ -10,7 +10,7 @@ class DetectTmPartsTypesController extends Controller
 {
     public function actionIndex()
     {
-        $tmParts = TmPart::find()->all();
+        $tmParts = TmPart::getAll();
         $detector = new PartTypeDetector();
 
         foreach ($tmParts as $tmPart) {

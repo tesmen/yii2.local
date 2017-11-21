@@ -37,4 +37,12 @@ class TmPart extends ActiveRecord
     {
         return '{{tm_parts}}';
     }
+
+    /**
+     * @return array|TmPart[]
+     */
+    public static function getAll()
+    {
+        return static::find()->all();
+    }
 }
