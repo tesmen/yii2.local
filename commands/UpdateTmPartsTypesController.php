@@ -6,12 +6,12 @@ use app\entity\TmPart;
 use app\models\PartsRecognizer\PartTypeDetector;
 use yii\console\Controller;
 
-class DetectTmPartsTypesController extends Controller
+class UpdateTmPartsTypesController extends Controller
 {
     public function actionIndex()
     {
         $tmParts = TmPart::getAll();
-        $detector = new PartTypeDetector();
+        $detector = PartTypeDetector::instance();
 
         foreach ($tmParts as $tmPart) {
             $id = $detector->detectPartType($tmPart->raw_name);

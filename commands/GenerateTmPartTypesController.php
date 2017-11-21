@@ -15,17 +15,12 @@ class GenerateTmPartTypesController extends Controller
     public function actionIndex()
     {
         $tmParts = TmPart::getAll();
-//Отвод 90-133х5-20 ГОСТ 30753-2001, отеч. РМРС
 
         foreach ($tmParts as $row) {
             $words = TextManipulator::createFromString($row->raw_name)
                 ->getNaturalWords();
 
-            $length = isset($words[1]) && TextManipulator::isWord($words[1])
-                ? 2
-                : 1;
-
-            $variant = array_splice($words, 0, $length);
+            $variant = array_splice($words, 0, 1);
             $partTypeName = mb_strtolower(implode(' ', $variant));
             $res = TmPartType::createSafe($partTypeName);
 
