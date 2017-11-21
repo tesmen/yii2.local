@@ -32,6 +32,14 @@ class TextManipulator
         return new static($text);
     }
 
+
+    public function lowerCase()
+    {
+        $this->outputText = mb_strtolower($this->outputText);
+
+        return $this;
+    }
+
     /**
      * @param array $words
      */
@@ -64,7 +72,7 @@ class TextManipulator
      */
     public function getNaturalWords()
     {
-        return mb_split('[\s|.|,|!|?]+', $this->outputText);
+        return mb_split('[\s|.|,|!|\-|?]+', $this->outputText);
     }
 
     /**
@@ -81,6 +89,20 @@ class TextManipulator
 
         $filteredWords = array_filter($words, $nonWordFilter);
         $this->createOutput($filteredWords);
+
+        return $this;
+    }
+
+    public function removeQuotes()
+    {
+        $this->outputText = str_replace(["'", '"'], ['', ''], $this->outputText);
+
+        return $this;
+    }
+
+    public function removeBraces()
+    {
+        $this->outputText = str_replace(["(", ')'], ['', ''], $this->outputText);
 
         return $this;
     }

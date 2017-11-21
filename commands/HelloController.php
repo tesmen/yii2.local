@@ -30,8 +30,9 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        $det = PartCodeDetector::instance();
-        $a = $det->detectPartCode('Иллюминатор управления с встроенной панелью управления MS PSU5, РМРС');
+        $a = \app\models\PartsRecognizer\PartMaterialDetector::detect(
+            'Штуцер ввертной с цапковым концом  под трубную резьбу G3/8-M27x1.5 бронзовый Ду10, Ру16'
+        );
         var_export($a);
     }
 }

@@ -25,11 +25,13 @@ class PartCodeDetector
     public function detectPartCode($str)
     {
         $partType = PartTypeDetector::instance()->detectPartType($str);
+
         if (empty($partType)) {
             return false;
         }
 
-        $map = new LikenessMap($partType)->;
+        $map = new LikenessMap($partType);
+        var_export($map->getMap($str));
 
         return;
     }
