@@ -2,13 +2,14 @@
 
 namespace app\models\PartsRecognizer;
 
-class PartPnDetector
+class PartDnDetector
 {
     // lat cyr cyr
-    private static $firstLetters = ['p', 'р', 'п'];
+    private static $firstLetters = ['d', 'д'];
 
     // lat lat cyr
     private static $secondLetters = ['n', 'y', 'у'];
+
 
     private static $instance;
 
