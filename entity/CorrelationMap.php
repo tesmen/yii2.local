@@ -67,4 +67,13 @@ class CorrelationMap extends ActiveRecord
 
         return static::$cache[$js];
     }
+
+    /**
+     * @param $code
+     * @return CorrelationMap
+     */
+    public static function findByCode($code)
+    {
+        return static::findOne(['code' => $code]);
+    }
 }

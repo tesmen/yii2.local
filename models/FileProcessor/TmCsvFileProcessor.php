@@ -2,6 +2,7 @@
 
 namespace app\models\FileProcessor;
 
+use app\entity\CorrelationMap;
 use app\models\PartsRecognizer\PartCodeDetector;
 use app\services\FileService;
 
@@ -46,6 +47,13 @@ class TmCsvFileProcessor
             if ($code) {
                 $this->stat->detectedRows++;
                 $row[$this->codeColumn] = implode('; ', $code);
+                $row[29] = 'auto';
+
+                $correlationDetail = CorrelationMap::findByCode($code);
+
+                if ($correlationDetail) {
+                    $row[30] = $correlationDetail->ved_name;
+                }
             } else {
                 $this->stat->unDetectedRows++;
             }
