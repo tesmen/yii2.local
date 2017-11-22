@@ -9,6 +9,7 @@ namespace app\commands;
 
 use app\entity\TmPart;
 use app\models\PartsRecognizer\PartCodeDetector;
+use app\models\PartsRecognizer\PartMaterialDetector;
 use app\util\TextManipulator;
 use yii\console\Controller;
 use yii\log\Logger;
@@ -30,9 +31,14 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        $a = \app\models\PartsRecognizer\PartPnDetector::instance()->detect(
-            'фланец трубный плоский приварной стальной Ду25 Ру16'
+//        $a = PartMaterialDetector::instance()->detect(
+//            'Затвор поворотный фланцевый Ду125, Ру10 Econ fig.6610,  ковкий чугун, импорт, морской регистр -'
+//        );
+//        var_export($a);
+//        die;
+        $code = \app\models\PartsRecognizer\PartCodeDetector::instance()->detect(
+            'Затвор поворотный межфланцевый,  Ду125, Ру10 тип "баттерфляй" GGG-40.3'
         );
-        var_export($a);
+        var_export($code);
     }
 }

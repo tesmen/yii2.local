@@ -12,7 +12,7 @@ class PartMaterialDetector
         5 => ['резин'],
         6 => ['сталь'],
         7 => ['дер.', 'дерев'],
-        8 => ['чугун.'],
+        8 => ['чугун'],
     ];
 
     private static $instance;

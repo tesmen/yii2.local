@@ -10,14 +10,22 @@ class LikenessMap
     private $partsOfSameType;
     private $partsMetaData;
 
-    public function __construct($partTypeId, $materialId = null)
+    public function __construct(TmPart $part)
     {
-        $this->partType = $partTypeId;
+        $this->partType = $part->part_type_id;
 
-        $criteria = ['part_type_id' => $partTypeId];
+        $criteria = ['part_type_id' => $part->part_type_id];
 
-        if ($materialId) {
-            $criteria['material_id'] = $materialId;
+        if ($part->material_id) {
+            $criteria['material_id'] = $part->material_id;
+        }
+
+        if ($part->pn) {
+            $criteria['pn'] = $part->pn;
+        }
+
+        if ($part->dn) {
+            $criteria['dn'] = $part->dn;
         }
 
         $this->partsOfSameType = TmPart::findAll($criteria);
@@ -64,6 +72,39 @@ class LikenessMap
             $map[$part['id']] = $this->countLikeness($input, $part['words']);
         }
 
+        uasort(
+            $map,
+            function ($a, $b) {
+                return $a < $b;
+            }
+        );
+
         return $map;
+    }
+
+    /**
+     * @param $str
+     * @return array | bool
+     */
+    public function getCode($str)
+    {
+        $output = [];
+        $map = $this->getMap($str);
+        $max = reset($map);
+        $confidenceMap = array_count_values($map);
+
+        if ($confidenceMap[$max] > 3) {
+            return false;
+        }
+
+
+        foreach ($map as $id => $likeness) {
+            if ($likeness === $max)
+                $output[] = $id;
+        }
+        var_export($map);
+        var_export($confidenceMap);
+
+        return $output;
     }
 }

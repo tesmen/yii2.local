@@ -2,6 +2,8 @@
 
 namespace app\models\PartsRecognizer;
 
+use app\entity\TmPart;
+
 class PartCodeDetector
 {
     private static $instance;
@@ -22,18 +24,23 @@ class PartCodeDetector
         return static::$instance;
     }
 
-    public function detectPartCode($str)
+    public function detect($str)
     {
         $partType = PartTypeDetector::instance()->detectPartType($str);
-        $materialId = PartMaterialDetector::instance()->detect($str);
 
         if (empty($partType)) {
             return false;
         }
 
-        $map = new LikenessMap($partType,$materialId);
-        var_export($map->getMap($str));
+        $part = new TmPart();
+        $part->raw_name = $str;
+        $part->part_type_id = $partType;
+        $part->dn = PartDnDetector::instance()->detect($str);
+        $part->pn = PartPnDetector::instance()->detect($str);
+        $part->material_id = PartMaterialDetector::instance()->detect($str);
 
-        return;
+        $map = new LikenessMap($part);
+
+        return $map->getCode($str);
     }
 }
