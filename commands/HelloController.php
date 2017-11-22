@@ -24,9 +24,11 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        $code = \app\models\PartsRecognizer\PartCodeDetector::instance()->detect(
-            'Труба 140х8 ГОСТ8732-78/В10 ГОСТ8731-74 (внутренний диаметр расточить до 125)'
-        );
+//        $code = \app\models\PartsRecognizer\PartCodeDetector::instance()->detect(
+//            'Труба 140х8 ГОСТ8732-78/В10 ГОСТ8731-74 (внутренний диаметр расточить до 125)'
+//        );
+
+        $code = \app\entity\CorrelationMap::createSafe(1,2,3);
         var_export($code);
     }
 }
