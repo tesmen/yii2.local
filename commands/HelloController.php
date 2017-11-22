@@ -37,8 +37,7 @@ class HelloController extends Controller
 //        var_export($a);
 //        die;
         $code = \app\models\PartsRecognizer\PartCodeDetector::instance()->detect(
-            'Прокладка штуцерная Ду10, INCA S=1.5
-'
+            'Прокладка штуцерная Ду10, INCA S=1.5'
         );
         var_export($code);
     }

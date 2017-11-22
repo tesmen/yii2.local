@@ -30,7 +30,7 @@ class LikenessMap
             $criteria['dn'] = $part->dn;
         }
 
-        $this->partsOfSameType = TmPart::findAll($criteria);
+        $this->partsOfSameType = TmPart::fromCache($criteria);
 
         foreach ($this->partsOfSameType as $type) {
             $words = PartNameStripper::stripToArray($type->raw_name);
@@ -94,7 +94,7 @@ class LikenessMap
     {
         $output = [];
         $map = $this->getMap($str);
-        var_export($map);
+
         if (empty($map)) {
             return false;
         }

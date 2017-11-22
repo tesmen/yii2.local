@@ -24,6 +24,8 @@ use yii\db\ActiveRecord;
  */
 class TmPart extends ActiveRecord
 {
+    private static $cache;
+
     public static function create($title)
     {
         $e = new static();
@@ -45,5 +47,20 @@ class TmPart extends ActiveRecord
     public static function getAll()
     {
         return static::find()->all();
+    }
+
+    /**
+     * @param array $criteria
+     * @return array|TmPart[]
+     */
+    public static function fromCache($criteria)
+    {
+        $js = json_encode($criteria);
+
+        if (empty(static::$cache[$js])) {
+            return static::$cache[$js] = static::findAll($criteria);
+        }
+
+        return static::$cache[$js];
     }
 }
