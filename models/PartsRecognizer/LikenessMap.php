@@ -8,7 +8,7 @@ class LikenessMap
 {
     private $partType;
     private $partsOfSameType;
-    private $partsMetaData;
+    private $partsMetaData = [];
 
     public function __construct(TmPart $part)
     {
@@ -69,7 +69,7 @@ class LikenessMap
         $input = PartNameStripper::stripToArray($str);
 
         foreach ($this->partsMetaData as $part) {
-            $map[$part['id']] = $this->countLikeness($input, $part['words']);
+            $map[$part['code']] = $this->countLikeness($input, $part['words']);
         }
 
         uasort(
@@ -90,6 +90,11 @@ class LikenessMap
     {
         $output = [];
         $map = $this->getMap($str);
+
+        if (empty($map)) {
+            return false;
+        }
+
         $max = reset($map);
         $confidenceMap = array_count_values($map);
 
@@ -97,13 +102,10 @@ class LikenessMap
             return false;
         }
 
-
         foreach ($map as $id => $likeness) {
             if ($likeness === $max)
                 $output[] = $id;
         }
-        var_export($map);
-        var_export($confidenceMap);
 
         return $output;
     }

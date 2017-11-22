@@ -37,7 +37,8 @@ class HelloController extends Controller
 //        var_export($a);
 //        die;
         $code = \app\models\PartsRecognizer\PartCodeDetector::instance()->detect(
-            'Затвор поворотный межфланцевый,  Ду125, Ру10 тип "баттерфляй" GGG-40.3'
+            'Прокладка штуцерная Ду10, INCA S=1.5
+'
         );
         var_export($code);
     }

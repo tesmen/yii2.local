@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\entity\TmPart;
+use app\models\PartsRecognizer\PartCodeDetector;
 use yii\console\Controller;
 
 class DetectTmPartsCodesController extends Controller
@@ -10,37 +10,53 @@ class DetectTmPartsCodesController extends Controller
     public function actionIndex($filename)
     {
         $data = $this->parseCsvFile($filename);
-        $dupes = 0;
+        $detected = 0;
+        $unDetected = 0;
 
+        foreach ($data as &$row) {
+            $name = $row[3];
+            $existedCode = $row[4];
 
-        foreach ($data as $row) {
-            if (empty($row[7])) {
+            if (empty($name) || !empty($existedCode)) {
                 continue;
             }
 
-            $kod = mb_strtolower($row[3]);
-            $detailName = $row[7];
+            $code = PartCodeDetector::instance()->detect($name);
 
-            if (TmPart::findOne(['kod' => $kod])) {
-                $dupes++;
-                continue;
+            if ($code) {
+                $detected++;
+                $row[4] = implode('; ', $code);
+            } else {
+                $unDetected++;
             }
 
-            $rec = new TmPart();
-            $rec->ident_ved = mb_strtolower($row[1]);
-            $rec->kod = $kod;
-            $rec->poz_ved = mb_strtolower($row[4]);
-            $rec->obozn = mb_strtolower($row[6]);
-            $rec->raw_name = $detailName;
-            $rec->save();
+
         }
 
-        var_export('Dupes:' . $dupes);
+        var_export('detected:' . $detected);
+        var_export('undetected:' . $unDetected);
+
+        $this->saveCsvFile($data, $filename);
+    }
+
+    public function saveCsvFile(array $rows, $filename)
+    {
+        $output = fopen('out-' . $filename, 'w');
+
+        if (true) {
+            $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility
+            fputs($output, $BOM);
+        }
+
+        foreach ($rows as $row) {
+            fputcsv($output, $row, ',');
+        }
+
+        fclose($output);
     }
 
     public function parseCsvFile($file)
     {
         return array_map('str_getcsv', file($file));
     }
-
 }
