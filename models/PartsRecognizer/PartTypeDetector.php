@@ -4,7 +4,7 @@ namespace app\models\PartsRecognizer;
 
 use app\entity\TmPartType;
 
-class PartTypeDetector
+class PartTypeDetector implements DetectorInterface
 {
     private $partTypes;
     private static $instance;
@@ -26,7 +26,7 @@ class PartTypeDetector
         return static::$instance;
     }
 
-    public function detectPartType($str)
+    public function detect($str)
     {
         $prepared = mb_strtolower(trim($str));
         $variants = [];

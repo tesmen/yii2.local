@@ -14,7 +14,7 @@ class UpdateTmPartsTypesController extends Controller
         $detector = PartTypeDetector::instance();
 
         foreach ($tmParts as $tmPart) {
-            $id = $detector->detectPartType($tmPart->raw_name);
+            $id = $detector->detect($tmPart->raw_name);
 
             if ($id) {
                 $tmPart->part_type_id = $id;

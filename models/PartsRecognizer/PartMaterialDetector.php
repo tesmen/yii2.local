@@ -2,7 +2,7 @@
 
 namespace app\models\PartsRecognizer;
 
-class PartMaterialDetector
+class PartMaterialDetector implements DetectorInterface
 {
     private static $materials = [
         1 => ['латун'],

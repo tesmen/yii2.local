@@ -2,7 +2,7 @@
 
 namespace app\models\PartsRecognizer;
 
-class PartDnDetector
+class PartDnDetector implements DetectorInterface
 {
     // lat cyr cyr
     private static $firstLetters = ['d', 'д'];

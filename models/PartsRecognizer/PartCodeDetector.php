@@ -4,7 +4,7 @@ namespace app\models\PartsRecognizer;
 
 use app\entity\TmPart;
 
-class PartCodeDetector
+class PartCodeDetector implements DetectorInterface
 {
     private static $instance;
 
@@ -24,9 +24,13 @@ class PartCodeDetector
         return static::$instance;
     }
 
+    /**
+     * @param $str
+     * @return array|bool|string[]
+     */
     public function detect($str)
     {
-        $partType = PartTypeDetector::instance()->detectPartType($str);
+        $partType = PartTypeDetector::instance()->detect($str);
 
         if (empty($partType)) {
             return false;

@@ -2,7 +2,7 @@
 
 namespace app\models\PartsRecognizer;
 
-class PartPnDetector
+class PartPnDetector implements DetectorInterface
 {
     // lat cyr cyr
     private static $firstLetters = ['p', 'р', 'п'];

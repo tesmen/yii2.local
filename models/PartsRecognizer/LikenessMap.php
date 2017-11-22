@@ -10,6 +10,8 @@ class LikenessMap
     private $partsOfSameType;
     private $partsMetaData = [];
 
+    const THRESHOLD = 50;
+
     public function __construct(TmPart $part)
     {
         $this->partType = $part->part_type_id;
@@ -67,9 +69,11 @@ class LikenessMap
     {
         $map = [];
         $input = PartNameStripper::stripToArray($str);
+        $inputWordsCnt = sizeof($input);
 
         foreach ($this->partsMetaData as $part) {
-            $map[$part['code']] = $this->countLikeness($input, $part['words']);
+            $percent = intval($this->countLikeness($input, $part['words']) / $inputWordsCnt * 100);
+            $map[$part['code']] = $percent;
         }
 
         uasort(
@@ -103,6 +107,10 @@ class LikenessMap
         }
 
         foreach ($map as $id => $likeness) {
+            if ($likeness < static::THRESHOLD) {
+                continue;
+            }
+
             if ($likeness === $max)
                 $output[] = $id;
         }
