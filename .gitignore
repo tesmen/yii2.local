@@ -3,3 +3,7 @@ composer.phar
 /runtime
 /.idea
 /config/db.php
+/batch/*.csv
+!/batch/.gitkeep
+/batch/output/*.csv
+!/batch/output/.gitkeep

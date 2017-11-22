@@ -5,11 +5,28 @@ namespace app\commands;
 use app\models\PartsRecognizer\PartCodeDetector;
 use yii\console\Controller;
 
-class DetectTmPartsCodesController extends Controller
+class DetectBatchCodesController extends Controller
 {
-    public function actionIndex($filename)
+
+    public function getBatchDir()
     {
-        $data = $this->parseCsvFile($filename);
+        return __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '/batch/';
+    }
+
+    public function actionIndex()
+    {
+        $files = scandir($this->getBatchDir());
+
+        foreach ($files as $file) {
+            if (strpos($file, '.csv')) {
+                $this->parseFile($file);
+            }
+        }
+    }
+
+    private function parseFile($filename)
+    {
+        $data = $this->parseCsvFile($this->getBatchDir() . $filename);
         $detected = 0;
         $unDetected = 0;
         $all = 0;
@@ -34,14 +51,16 @@ class DetectTmPartsCodesController extends Controller
             $all++;
         }
 
-        var_export("detected: $detected / {$all}" );
+        echo($filename);
+        echo(" detected: $detected / {$all}");
+        echo(PHP_EOL);
 
         $this->saveCsvFile($data, $filename);
     }
 
     public function saveCsvFile(array $rows, $filename)
     {
-        $output = fopen('out-' . $filename, 'w');
+        $output = fopen($this->getBatchDir() . '/output/' . $filename, 'w');
 
         if (true) {
             $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility
