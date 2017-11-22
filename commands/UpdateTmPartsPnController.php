@@ -19,7 +19,6 @@ class UpdateTmPartsPnController extends Controller
             $pn = $detector->detect($tmPart->raw_name);
 
             if ($pn) {
-                var_export($pn);
                 $tmPart->pn = $pn;
                 $tmPart->save();
             }

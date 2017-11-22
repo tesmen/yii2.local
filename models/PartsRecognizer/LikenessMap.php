@@ -94,7 +94,7 @@ class LikenessMap
     {
         $output = [];
         $map = $this->getMap($str);
-
+        var_export($map);
         if (empty($map)) {
             return false;
         }

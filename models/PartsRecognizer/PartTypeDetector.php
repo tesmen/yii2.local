@@ -32,7 +32,6 @@ class PartTypeDetector implements DetectorInterface
         $variants = [];
 
         foreach ($this->partTypes as $partType) {
-
             $tester = mb_strtolower(trim($partType['name']));
             $position = mb_strpos($prepared, $tester);
 

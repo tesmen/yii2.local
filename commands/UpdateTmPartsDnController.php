@@ -20,7 +20,6 @@ class UpdateTmPartsDnController extends Controller
             $dn = $detector->detect($tmPart->raw_name);
 
             if ($dn) {
-                var_export($dn);
                 $tmPart->dn = $dn;
                 $tmPart->save();
             }

@@ -6,7 +6,7 @@ use app\entity\TmPart;
 use app\traits\ConsoleParamsTrait;
 use yii\console\Controller;
 
-class ImportTmPartsController extends Controller
+class ImportVedAllController extends Controller
 {
     use ConsoleParamsTrait;
 
@@ -17,12 +17,12 @@ class ImportTmPartsController extends Controller
         $saved = 0;
 
         foreach ($data as $row) {
-            if (empty($row[7])) {
+            if (empty($row[1])) {
                 continue;
             }
 
-            $kod = mb_strtolower($row[3]);
-            $detailName = $row[7];
+            $kod = mb_strtolower($row[1]);
+            $detailName = mb_strtolower($row[4]);
 
             if (TmPart::findOne(['kod' => $kod])) {
                 $dupes++;
@@ -30,17 +30,14 @@ class ImportTmPartsController extends Controller
             }
 
             $rec = new TmPart();
-            $rec->ident_ved = mb_strtolower($row[1]);
             $rec->kod = $kod;
-            $rec->poz_ved = mb_strtolower($row[4]);
-            $rec->obozn = mb_strtolower($row[6]);
             $rec->raw_name = $detailName;
             $rec->save();
 
             $saved++;
         }
 
-        $all = sizeof( $data);
+        $all = sizeof($data);
         $this->writeln("Dupes: $dupes");
         $this->writeln("imported: $saved");
         $this->writeln("all: $all");

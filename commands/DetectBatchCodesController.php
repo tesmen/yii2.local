@@ -27,6 +27,7 @@ class DetectBatchCodesController extends Controller
         $all = 0;
 
         foreach ($data as &$row) {
+            $all++;
             $name = $row[3];
             $existedCode = $row[4];
 
@@ -42,8 +43,6 @@ class DetectBatchCodesController extends Controller
             } else {
                 $unDetected++;
             }
-
-            $all++;
         }
 
         echo($filename);
@@ -55,7 +54,7 @@ class DetectBatchCodesController extends Controller
 
     public function saveCsvFile(array $rows, $filename)
     {
-        $output = fopen(FileService::getBatchDir($filename), 'w');
+        $output = fopen(FileService::getOutputDir($filename), 'w');
 
         if (true) {
             $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility

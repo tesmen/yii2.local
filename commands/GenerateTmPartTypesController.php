@@ -15,24 +15,26 @@ class GenerateTmPartTypesController extends Controller
 
     public function actionIndex()
     {
+        $c = 0;
         $tmParts = TmPart::getAll();
 
         foreach ($tmParts as $row) {
-            $words = PartNameStripper::stripToArray($row);
+            $words = PartNameStripper::stripToArray($row->raw_name);
+            $variant = reset($words);
 
-            $variant = array_splice($words, 0, 1);
-            $partTypeName = mb_strtolower(implode(' ', $variant));
-            $res = TmPartType::createSafe($partTypeName);
+            if (empty($variant)) {
+                continue;
+            }
+
+            $res = TmPartType::createSafe($variant);
 
             if ($res) {
-                $this->writeln($partTypeName);
+                $this->writeln($variant);
+            }
+
+            if ($c % 100 === 0) {
+                $this->writeln($c);
             }
         }
     }
-
-    public function parseCsvFile($file)
-    {
-        return array_map('str_getcsv', file($file));
-    }
-
 }
