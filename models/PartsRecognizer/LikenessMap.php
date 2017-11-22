@@ -90,7 +90,7 @@ class LikenessMap
      * @param $str
      * @return array | bool
      */
-    public function getCode($str)
+    public function getCodes($str)
     {
         $output = [];
         $map = $this->getMap($str);

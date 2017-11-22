@@ -3,19 +3,14 @@
 namespace app\commands;
 
 use app\models\PartsRecognizer\PartCodeDetector;
+use app\services\FileService;
 use yii\console\Controller;
 
 class DetectBatchCodesController extends Controller
 {
-
-    public function getBatchDir()
-    {
-        return __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '/batch/';
-    }
-
     public function actionIndex()
     {
-        $files = scandir($this->getBatchDir());
+        $files = scandir(FileService::getBatchDir());
 
         foreach ($files as $file) {
             if (strpos($file, '.csv')) {
@@ -26,7 +21,7 @@ class DetectBatchCodesController extends Controller
 
     private function parseFile($filename)
     {
-        $data = $this->parseCsvFile($this->getBatchDir() . $filename);
+        $data = $this->parseCsvFile(FileService::getBatchDir($filename));
         $detected = 0;
         $unDetected = 0;
         $all = 0;
@@ -60,7 +55,7 @@ class DetectBatchCodesController extends Controller
 
     public function saveCsvFile(array $rows, $filename)
     {
-        $output = fopen($this->getBatchDir() . '/output/' . $filename, 'w');
+        $output = fopen(FileService::getBatchDir($filename), 'w');
 
         if (true) {
             $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility

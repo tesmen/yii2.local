@@ -45,6 +45,6 @@ class PartCodeDetector implements DetectorInterface
 
         $map = new LikenessMap($part);
 
-        return $map->getCode($str);
+        return $map->getCodes($str);
     }
 }
