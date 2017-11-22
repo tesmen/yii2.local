@@ -13,6 +13,7 @@ class PartMaterialDetector implements DetectorInterface
         6 => ['сталь'],
         7 => ['дер.', 'дерев'],
         8 => ['чугун'],
+        9 => ['композит'],
     ];
 
     private static $instance;
@@ -35,7 +36,7 @@ class PartMaterialDetector implements DetectorInterface
 
         foreach (static::$materials as $id => $synonyms) {
             foreach ($synonyms as $name) {
-                if ($position = mb_strpos($prepared, $name)) {
+                if ($position = mb_strpos($prepared, $name) !== false) {
                     return $id;
                 };
             }

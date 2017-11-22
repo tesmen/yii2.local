@@ -2,12 +2,15 @@
 
 namespace app\commands;
 
-use app\models\PartsRecognizer\PartCodeDetector;
+use app\models\FileProcessor\TmCsvFileProcessor;
 use app\services\FileService;
+use app\traits\ConsoleParamsTrait;
 use yii\console\Controller;
 
 class DetectBatchCodesController extends Controller
 {
+    use ConsoleParamsTrait;
+
     public function actionIndex()
     {
         $files = scandir(FileService::getBatchDir());
@@ -19,57 +22,18 @@ class DetectBatchCodesController extends Controller
         }
     }
 
-    private function parseFile($filename)
+    public function parseFile($filename)
     {
-        $data = $this->parseCsvFile(FileService::getBatchDir($filename));
-        $detected = 0;
-        $unDetected = 0;
-        $all = 0;
+        $this->writeln("---------------------------------------------");
+        $this->writeln("start $filename");
 
-        foreach ($data as &$row) {
-            $all++;
-            $name = $row[3];
-            $existedCode = $row[4];
+        $stat = TmCsvFileProcessor::instance($filename)
+            ->setCodeColumn(4)
+            ->setNameColumn(3)
+            ->processFile();
 
-            if (empty($name) || !empty($existedCode)) {
-                continue;
-            }
-
-            $code = PartCodeDetector::instance()->detect($name);
-
-            if ($code) {
-                $detected++;
-                $row[4] = implode('; ', $code);
-            } else {
-                $unDetected++;
-            }
-        }
-
-        echo($filename);
-        echo(" detected: $detected / {$all}");
-        echo(PHP_EOL);
-
-        $this->saveCsvFile($data, $filename);
-    }
-
-    public function saveCsvFile(array $rows, $filename)
-    {
-        $output = fopen(FileService::getOutputDir($filename), 'w');
-
-        if (true) {
-            $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility
-            fputs($output, $BOM);
-        }
-
-        foreach ($rows as $row) {
-            fputcsv($output, $row, ',');
-        }
-
-        fclose($output);
-    }
-
-    public function parseCsvFile($file)
-    {
-        return array_map('str_getcsv', file($file));
+        $this->writeln("finish $filename");
+        var_export($stat) ;
+        $this->writeln('end stat');
     }
 }

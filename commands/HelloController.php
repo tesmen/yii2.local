@@ -15,14 +15,7 @@ use yii\console\Controller;
 use yii\log\Logger;
 use Yii;
 
-/**
- * This command echoes the first argument that you have entered.
- *
- * This command is provided as an example for you to learn how to create console commands.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since  2.0
- */
+
 class HelloController extends Controller
 {
     /**
@@ -31,13 +24,8 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-//        $a = PartMaterialDetector::instance()->detect(
-//            'Затвор поворотный фланцевый Ду125, Ру10 Econ fig.6610,  ковкий чугун, импорт, морской регистр -'
-//        );
-//        var_export($a);
-//        die;
         $code = \app\models\PartsRecognizer\PartCodeDetector::instance()->detect(
-            'Прокладка штуцерная Ду10, INCA S=1.5'
+            'Труба 140х8 ГОСТ8732-78/В10 ГОСТ8731-74 (внутренний диаметр расточить до 125)'
         );
         var_export($code);
     }
