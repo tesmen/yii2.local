@@ -4,8 +4,8 @@ namespace app\models\PartsRecognizer;
 
 class PartPnDetector implements DetectorInterface
 {
-    // lat cyr cyr
-    private static $firstLetters = ['p', 'р', 'п'];
+    // lat lat cyr cyr
+    private static $firstLetters = ['n', 'p', 'п', 'р'];
 
     // lat lat cyr
     private static $secondLetters = ['n', 'y', 'у'];
