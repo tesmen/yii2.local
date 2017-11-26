@@ -26,14 +26,17 @@ class TmPartSynonymModel
 
     public static function getPartData($id)
     {
-        $rec = TmPart::find()
+        $data = TmPart::find()
             ->asArray()
             ->where(['id' => $id])->one();
 
-        $rec['synonyms'] = static::getPartSynonyms($id);
+        if (empty($data)) {
+            return false;
+        }
 
+        $data['synonyms'] = static::getPartSynonyms($id);
 
-        return $rec;
+        return $data;
     }
 
     public static function search(SynonymsSearch $search)

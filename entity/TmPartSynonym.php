@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  */
 class TmPartSynonym extends ActiveRecord
 {
+    use EntityTrait;
     private static $cache;
 
     public static function tableName()

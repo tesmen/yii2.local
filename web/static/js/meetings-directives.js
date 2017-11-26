@@ -510,7 +510,7 @@ function clickToPopupDirective() {
 }
 
 function clickToPromptDirective() {
-    function popupCtrl($scope, $modalInstance, text, title, label, placeholder, maxLength) {
+    function popupCtrl($scope, $uibModalInstance, text, title, label, placeholder, maxLength) {
         $scope.modal = {};
         $scope.modal.text = text;
         $scope.modal.title = title;
@@ -529,11 +529,11 @@ function clickToPromptDirective() {
         };
 
         $scope.close = function () {
-            $modalInstance.close($scope.modal.value);
+            $uibModalInstance.close($scope.modal.value);
         };
 
         $scope.dismiss = function () {
-            $modalInstance.dismiss();
+            $uibModalInstance.dismiss();
         };
     }
 
@@ -550,7 +550,7 @@ function clickToPromptDirective() {
         link: function (scope, element, attrs) {
             element.on('click', scope.showPopup)
         },
-        controller: function ($scope, $modal) {
+        controller: function ($scope, $uibModal) {
             var onPopupClose = function (value) {
                 $scope.callback(value)
             };
@@ -578,7 +578,13 @@ function clickToPromptDirective() {
             };
 
             $scope.showPopup = function () {
-                $modal.open(settings).result.then(onPopupClose);
+                var modalInstance = $uibModal.open(settings).result.then(onPopupClose);
+
+                // modalInstance.result.then(function (selectedItem) {
+                //     $ctrl.selected = selectedItem;
+                // }, function () {
+                //     $log.info('Modal dismissed at: ' + new Date());
+                // });
             };
         }
     };

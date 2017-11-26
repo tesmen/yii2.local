@@ -111,11 +111,11 @@ class AssetManager
             ->addAsset('<script src="/static/js/meetings-app.js"></script>');
     }
 
-    public function getAngularNotify()
+    public function getAngularUiNotification()
     {
         return $this
-            ->addAsset('<link rel="stylesheet" type="text/css" href="/css/angular/angular-notify.min.css">')
-            ->addAsset('<script src="/javascript/vendor/angular/angular-notify.min.js"></script>');
+            ->addAsset('<link rel="stylesheet" type="text/css" href="/static/angular-ui-notification/angular-ui-notification.css">')
+            ->addAsset('<script src="/static/angular-ui-notification/angular-ui-notification.js"></script>');
     }
 
     public function getAngularRoute()

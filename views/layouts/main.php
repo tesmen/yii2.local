@@ -18,6 +18,7 @@ AppAsset::register($this);
     ->getAngular16()
     ->getAdminForms()
     ->getAngularRoute()
+    ->getAngularUiNotification()
     ->getAngularSanitize()
     ->getAngularSelect()
     ->getMeetingsApplication()
@@ -43,7 +44,7 @@ AppAsset::register($this);
     <?php
     NavBar::begin(
         [
-            'brandLabel' => 'VZ Meetings',
+            'brandLabel' => 'VZ',
             'brandUrl'   => '/',
             'options'    => [
                 'class' => 'navbar-inverse navbar-fixed-top',
@@ -67,7 +68,7 @@ AppAsset::register($this);
         [
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items'   => [
-                ['label' => 'TM Syns', 'url' => ['/tm/part-synonyms']],
+                ['label' => 'TM Parts', 'url' => ['/tm/part-synonyms']],
                 ['label' => 'TM', 'url' => ['/tm/part-types']],
                 ['label' => 'Meetings', 'url' => ['/meetings']],
                 Yii::$app->user->isGuest
@@ -93,9 +94,9 @@ AppAsset::register($this);
 <!---->
 <!--<footer class="footer">-->
 <!--    <div class="container">-->
-<!--        <p class="pull-left">&copy; My Company --><?//= date('Y') ?><!--</p>-->
+<!--        <p class="pull-left">&copy; My Company --><? //= date('Y') ?><!--</p>-->
 <!---->
-<!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
+<!--        <p class="pull-right">--><? //= Yii::powered() ?><!--</p>-->
 <!--    </div>-->
 <!--</footer>-->
 

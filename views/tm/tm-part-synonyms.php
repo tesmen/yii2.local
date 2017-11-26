@@ -1,23 +1,16 @@
-<h3>TM Synonyms</h3>
+<h3>TM Parts</h3>
 
 <div ng-app="tmApp" ng-cloak>
     <ng-view></ng-view>
 
     <script type="text/ng-template" id="list.html">
-
         <div class="row">
-            <div class="col-xs-2 ">
-                <span> Всего: {{totalItems}} элементов</span>
-                <span> Всего: {{totalItems}} элементов</span>
-            </div>
-
-            <div class="col-xs-8 text-center">
+            <div class="col-xs-12 text-center">
                 <ul uib-pagination total-items="totalItems" ng-model="search.page" ng-change="searchChanged()"
                     max-size="10">
                 </ul>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-xs-12">
@@ -28,18 +21,21 @@
                         </td>
 
                         <td>
-                            <input class="form-control" placeholder="Поиск" ng-model="search.code" fast-enter="getData()">
+                            <input class="form-control" placeholder="Поиск" ng-model="search.code"
+                                   fast-enter="getData()">
                         </td>
 
                         <td>
-                            <input class="form-control" placeholder="Поиск" ng-model="search.ved_name" fast-enter="getData()">
+                            <input class="form-control" placeholder="Поиск" ng-model="search.ved_name"
+                                   fast-enter="getData()">
                         </td>
 
                         <td>
-                            <input class="form-control" placeholder="Поиск" ng-model="search.synonym" fast-enter="getData()">
+                            <input class="form-control" placeholder="Поиск" ng-model="search.synonym"
+                                   fast-enter="getData()">
                         </td>
 
-                        <td>
+                        <td class="text-right">
                             <button class="btn btn-sm btn-default btn-primary" ng-click="getData()">
                                 Поиск <span class="glyphicon glyphicon-search"></span>
                             </button>
@@ -89,8 +85,8 @@
                         </td>
 
                         <td style="word-break: break-all">
-                            <button class="btn btn-sm btn-default btn-primary">
-                                <span class="glyphicon glyphicon-pencil"></span>
+                            <button class="btn btn-sm btn-default btn-primary" ng-click="editPart(row.id)">
+                                <span class="glyphicon glyphicon-pencil"></span> Редактировать
                             </button>
                         </td>
                     </tr>
@@ -123,35 +119,145 @@
             </div>
         </div>
     </script>
+
+    <script type="text/ng-template" id="edit.html">
+        <to-list-button button-text="Назад"></to-list-button>
+
+        <div class="row top-buffer">
+            <div class="col-xs-4">
+                <label for="">Основные данные</label>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <b>Код:</b>
+                        {{partData.code}}
+                    </li>
+
+                    <li class="list-group-item">
+
+                        <b>Название по ведомости:</b> <br>
+                        {{partData.raw_name}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-xs-8">
+                <label for="">
+                    Синонимы
+                </label>
+
+                <a class="pull-right" href click-to-prompt popup-title="Новый синоним" popup-text="asd"
+                   callback="createSynonym">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Добавить
+                </a>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="synonym in  partData.synonyms">
+                                <span class="badge cursor-pointer">
+                                    <span class="glyphicon glyphicon-remove"
+                                          ng-click="deleteSynonym(synonym.id)"></span>
+                                </span>
+
+                                <span class="badge cursor-pointer">
+                                    <span class="glyphicon glyphicon-pencil" ng-click="editSynonym(synonym.id)"></span>
+                                </span>
+                                {{synonym.name}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 </div>
 
 <script>
-
-
-    function synonymsService($http) {
+    function partsService($http) {
         const BASE_URL = '/tm/';
 
-        this.getSynsPromise = function (search) {
+        this.getPartsDataPromise = function (search) {
             return $http({
                     url: BASE_URL + 'get-synonyms',
                     method: "GET",
                     params: search
                 }
             );
+        };
+
+        this.getOnePartDataPromise = function (id) {
+            return $http({
+                    url: BASE_URL + 'get-part-data',
+                    method: "GET",
+                    params: {id: id}
+                }
+            );
+        };
+
+        this.createSynonymPromise = function (id, name) {
+            return $http({
+                    url: BASE_URL + 'create-part-synonym',
+                    method: "POST",
+                    params: {id: id, name: name}
+                }
+            );
+        };
+
+        this.deleteSynonymPromise = function (id) {
+            return $http({
+                    url: BASE_URL + 'delete-part-synonym',
+                    method: "POST",
+                    params: {id: id}
+                }
+            );
         }
     }
 
-    function editSynonymCtrl($scope, $http) {
+    function editSynonymCtrl($scope, $routeParams, partsService, Notification) {
+        $scope.createSynonym = function (name) {
+            partsService.createSynonymPromise($routeParams.id, name)
+                .then(function (res) {
+                    $scope.getPartData();
+                })
+        };
 
+        $scope.deleteSynonym = function (id) {
+            partsService.deleteSynonymPromise().then(function () {
+                    Notification.success('Success');
+                },
+                function () {
+                    Notification.error('Error....');
+                });
+        };
+
+        $scope.editSynonym = function () {
+        };
+
+        $scope.getPartData = function () {
+            partsService
+                .getOnePartDataPromise($routeParams.id)
+                .then(function (res) {
+                        $scope.partData = res.data
+                    }
+                )
+        };
+
+        $scope.getPartData();
     }
 
-    function SynonymsCtrl($scope, $http, $timeout, synonymsService) {
+    function SynonymsCtrl($scope, $location, $timeout, partsService) {
         $scope.search = {
-            code:''
+            code: ''
         };
 
         $scope.totalItems = 100;
         $scope.currentPage = 3;
+
+        $scope.editPart = function (id) {
+            $location.path('/edit/' + id);
+        };
 
         $scope.searchChanged = function () {
             $timeout(function () {
@@ -160,8 +266,8 @@
         };
 
         $scope.getData = function () {
-            synonymsService
-                .getSynsPromise($scope.search)
+            partsService
+                .getPartsDataPromise($scope.search)
                 .then(function (response) {
                     $scope.rows = response.data.items;
                     $scope.totalItems = response.data.total;
@@ -172,7 +278,6 @@
         $scope.getData()
     }
 
-
     function routeConfig($routeProvider) {
         $routeProvider
             .when('/', {
@@ -180,7 +285,7 @@
                 controller: SynonymsCtrl
             })
             .when('/edit/:id', {
-                templateUrl: 'views/tm/part-types.html',
+                templateUrl: 'edit.html',
                 controller: editSynonymCtrl
             })
             .otherwise({
@@ -190,9 +295,22 @@
         // $locationProvider.html5Mode(true);
     }
 
-    var app = angular
-        .module('tmApp', ['ngRoute', 'vz.directives', 'ui.bootstrap'])
-        .service('synonymsService', synonymsService)
+    function NotificationsConfig(NotificationProvider) {
+        NotificationProvider.setOptions({
+            delay: 2000,
+            startTop: 20,
+            startRight: 10,
+            verticalSpacing: 20,
+            horizontalSpacing: 20,
+            positionX: 'right',
+            positionY: 'top'
+        });
+    }
+
+    angular
+        .module('tmApp', ['ngRoute', 'vz.directives', 'ui.bootstrap', 'ui-notification'])
+        .service('partsService', partsService)
         .config(routeConfig)
+        .config(NotificationsConfig)
         .config(httpConfig);
 </script>
