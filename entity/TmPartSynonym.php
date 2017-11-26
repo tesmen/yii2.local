@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
  *
  * @property $id
  * @property $name
- * @property $code
+ * @property $part_id
  *
  */
 class TmPartSynonym extends ActiveRecord
@@ -22,12 +22,12 @@ class TmPartSynonym extends ActiveRecord
         return '{{tm_part_synonyms}}';
     }
 
-    public static function create($title, $code)
+    public static function create($title, $partId)
     {
         $e = new static();
 
         $e->name = $title;
-        $e->code = $code;
+        $e->part_id = $partId;
 
         return $e->save()
             ? $e

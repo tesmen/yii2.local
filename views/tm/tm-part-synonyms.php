@@ -3,9 +3,11 @@
     <ng-view></ng-view>
 
     <script type="text/ng-template" id="list.html">
-        <table class="table-bordered table-condensed table-hover">
+        <table class="table table-bordered table-condensed table-hover ">
             <thead>
             <tr>
+                <td>
+                </td>
                 <td>
                     <input class="form-control" placeholder="Поиск">
                 </td>
@@ -23,6 +25,9 @@
             </tr>
 
             <tr>
+                <td class="text-center">
+                    ID
+                </td>
                 <td class="text-center">
                     Код
                 </td>
@@ -46,11 +51,17 @@
                 </td>
 
                 <td>
-                    {{row.name}}
+                    {{row.code}}
                 </td>
 
                 <td>
-                    <span ng-repeat="synonym in row.synonyms">{{synonym}}</span>
+                    {{row.raw_name}}
+                </td>
+
+                <td>
+                    <div ng-repeat="synonym in row.synonyms">
+                        - <span>{{synonym.name}}</span>
+                    </div>
                 </td>
 
                 <td>

@@ -32,16 +32,16 @@ class ImportVedController extends Controller
                 continue;
             }
 
-            if (TmPart::findOne(['kod' => $kod])) {
+            if (TmPart::findOne(['code' => $kod])) {
                 $dupes++;
                 continue;
             }
 
-            $rec = new TmPart();
-            $rec->kod = $kod;
-            $rec->raw_name = $rawName;
-            $rec->save();
-            TmPartSynonymModel::createSafe(mb_strtolower($rawName), $kod);
+            $part = new TmPart();
+            $part->code = $kod;
+            $part->raw_name = $rawName;
+            $part->save();
+            TmPartSynonymModel::createSafe(mb_strtolower($rawName), $part->id);
 
             $saved++;
         }

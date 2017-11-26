@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
  * @property $raw_name
  * @property $name
  * @property $ident_ved
- * @property $kod
+ * @property $code
  * @property $poz_ved
  * @property $obozn
  * @property $pn
@@ -36,7 +36,6 @@ class TmPart extends ActiveRecord
         $e = new static();
 
         $e->raw_name = $title;
-        $e->ob = $title;
         $e->save();
 
     }
