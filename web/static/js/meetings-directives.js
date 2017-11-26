@@ -219,7 +219,7 @@ var directiveIqEnter = function () {
         element.bind("keydown keypress", function (event) {
             if (event.which === 13 && !event.ctrlKey) {
                 scope.$apply(function () {
-                    scope.$eval(attrs.iqEnter);
+                    scope.$eval(attrs.fastEnter);
                 });
 
                 event.preventDefault();
@@ -1321,7 +1321,7 @@ function adminSortingColumnDirective() {
 }
 
 angular
-    .module('meetings.directives', ['ngSanitize', 'ui.select', 'ui.bootstrap'])
+    .module('vz.directives', ['ngSanitize', 'ui.select', 'ui.bootstrap'])
     .directive('adminYesNoSelect', adminYesNoSelect)
     .directive('adminSelect', adminSelectSimple)
     .directive('adminInputSimple', adminInputSimple)
@@ -1338,4 +1338,5 @@ angular
     .directive('toggleActiveButton', toggleActiveButtonDirective)
     .directive('clickToPrompt', clickToPromptDirective)
     .directive('blinder', blinderDirective)
+    .directive('fastEnter', directiveIqEnter)
 ;

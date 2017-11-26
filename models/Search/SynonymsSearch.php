@@ -7,7 +7,7 @@ namespace app\models\Search;
  * @package app\models\Seach
  *
  * @property $code
- * @property $syn_name
+ * @property $synonym
  * @property $ved_name
  */
 class SynonymsSearch extends Search
@@ -16,8 +16,9 @@ class SynonymsSearch extends Search
     {
         $defaults = [
             'ved_name' => '',
-            'syn_name' => '',
+            'synonym' => '',
             'code'     => '',
+            'limit'     => 10,
         ];
 
         return array_merge(parent::getDefaults(), $defaults);

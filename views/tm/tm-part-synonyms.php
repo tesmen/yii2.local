@@ -1,78 +1,102 @@
 <h3>TM Synonyms</h3>
+
 <div ng-app="tmApp" ng-cloak>
     <ng-view></ng-view>
 
     <script type="text/ng-template" id="list.html">
-        <table class="table table-bordered table-condensed table-hover " >
-            <thead>
-            <tr>
-                <td>
-                </td>
 
-                <td>
-                    <input class="form-control" placeholder="Поиск">
-                </td>
+        <div class="row">
+            <div class="col-xs-2 ">
+                <span> Всего: {{totalItems}} элементов</span>
+                <span> Всего: {{totalItems}} элементов</span>
+            </div>
 
-                <td>
-                    <input class="form-control" placeholder="Поиск">
-                </td>
+            <div class="col-xs-8 text-center">
+                <ul uib-pagination total-items="totalItems" ng-model="search.page" ng-change="searchChanged()"
+                    max-size="10">
+                </ul>
+            </div>
+        </div>
 
-                <td>
-                    <input class="form-control" placeholder="Поиск">
-                </td>
 
-                <td>
-                </td>
-            </tr>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-bordered table-condensed table-hover " style="font-size: 14px">
+                    <thead>
+                    <tr>
+                        <td>
+                        </td>
 
-            <tr>
-                <td class="text-center">
-                    ID
-                </td>
+                        <td>
+                            <input class="form-control" placeholder="Поиск" ng-model="search.code" fast-enter="getData()">
+                        </td>
 
-                <td class="text-center">
-                    Код
-                </td>
+                        <td>
+                            <input class="form-control" placeholder="Поиск" ng-model="search.ved_name" fast-enter="getData()">
+                        </td>
 
-                <td class="text-center" >
-                    Назв. ведомости
-                </td>
+                        <td>
+                            <input class="form-control" placeholder="Поиск" ng-model="search.synonym" fast-enter="getData()">
+                        </td>
 
-                <td class="text-center" >
-                    Синонимы
-                </td>
+                        <td>
+                            <button class="btn btn-sm btn-default btn-primary" ng-click="getData()">
+                                Поиск <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </td>
 
-                <td class="text-center">
-                </td>
-            </tr>
-            </thead>
+                    </tr>
 
-            <tr ng-repeat="row in rows">
-                <td>
-                    {{row.id}}
-                </td>
+                    <tr>
+                        <td class="text-center">
+                            ID
+                        </td>
 
-                <td>
-                    {{row.code}}
-                </td>
+                        <td class="text-center">
+                            Код
+                        </td>
 
-                <td style="word-break: break-all">
-                    {{row.raw_name}}
-                </td>
+                        <td class="text-center">
+                            Назв. ведомости
+                        </td>
 
-                <td style="word-break: break-all">
-                    <div ng-repeat="synonym in row.synonyms">
-                        - <span>{{synonym.name}}</span>
-                    </div>
-                </td>
+                        <td class="text-center">
+                            Синонимы
+                        </td>
 
-                <td >
-                    <button class="btn btn-sm btn-default btn-primary">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                </td>
-            </tr>
-        </table>
+                        <td class="text-center">
+                        </td>
+                    </tr>
+                    </thead>
+
+                    <tr ng-repeat="row in rows">
+                        <td>
+                            {{row.id}}
+                        </td>
+
+                        <td>
+                            {{row.code}}
+                        </td>
+
+                        <td style="word-break: break-all">
+                            {{row.raw_name}}
+                        </td>
+
+                        <td style="word-break: break-all">
+                            <div ng-repeat="synonym in row.synonyms">
+                                - <span>{{synonym.name}}</span>
+                            </div>
+                        </td>
+
+                        <td style="word-break: break-all">
+                            <button class="btn btn-sm btn-default btn-primary">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xs-4">
@@ -108,7 +132,12 @@
         const BASE_URL = '/tm/';
 
         this.getSynsPromise = function (search) {
-            return $http.get(BASE_URL + 'get-synonyms', search);
+            return $http({
+                    url: BASE_URL + 'get-synonyms',
+                    method: "GET",
+                    params: search
+                }
+            );
         }
     }
 
@@ -116,32 +145,31 @@
 
     }
 
-    function SynonymsCtrl($scope, $http, synonymsService) {
-        $scope.partTypes = [];
+    function SynonymsCtrl($scope, $http, $timeout, synonymsService) {
+        $scope.search = {
+            code:''
+        };
 
-        $scope.getSynonyms = function () {
+        $scope.totalItems = 100;
+        $scope.currentPage = 3;
+
+        $scope.searchChanged = function () {
+            $timeout(function () {
+                $scope.getData();
+            }, 0)
+        };
+
+        $scope.getData = function () {
             synonymsService
-                .getSynsPromise()
+                .getSynsPromise($scope.search)
                 .then(function (response) {
                     $scope.rows = response.data.items;
+                    $scope.totalItems = response.data.total;
                     console.log($scope.rows)
                 });
         };
 
-        $scope.createPartType = function () {
-            $http
-                .post('/tm/create-part-type', {name: $scope.partName})
-                .then($scope.getSynonyms);
-        };
-
-        $scope.toggleActive = function () {
-            $http
-                .post('/tm/toggle-part-type-active', {name: $scope.partName})
-                .then($scope.getSynonyms);
-
-        };
-
-        $scope.getSynonyms()
+        $scope.getData()
     }
 
 
@@ -163,7 +191,7 @@
     }
 
     var app = angular
-        .module('tmApp', ['ngRoute', 'meetings.directives'])
+        .module('tmApp', ['ngRoute', 'vz.directives', 'ui.bootstrap'])
         .service('synonymsService', synonymsService)
         .config(routeConfig)
         .config(httpConfig);

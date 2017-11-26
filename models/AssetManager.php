@@ -123,7 +123,7 @@ class AssetManager
         return $this->addAsset('<script src="/static/js/angular-route.js"></script>');
     }
 
-    public function getNgBootstrapTpls()
+    public function getAngularUiBootstrap()
     {
         return $this->addAsset('<script src="/static/ui-bootstrap-tpls-2.5.0.js"></script>');
     }
@@ -149,7 +149,7 @@ class AssetManager
             ->scriptJs18n()
             ->getAngularSanitize()
             ->getAngularSelect()
-            ->getNgBootstrapTpls()
+            ->getAngularUiBootstrap()
             ->addAsset('<script src="/static/js/meetings-directives.js"></script>');
     }
 

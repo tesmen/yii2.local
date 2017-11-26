@@ -26,12 +26,13 @@ class TmController extends Controller
     {
         $get = $this->getQueryParams();
         $search = new SynonymsSearch($get);
-        $items = TmPartSynonymModel::search($search);
 
-        return $this->asJson([
-            'items' =>$items,
-            'total' => sizeof($items)
-        ]);
+        return $this->asJson(
+            [
+                'items' => TmPartSynonymModel::search($search),
+                'total' => TmPartSynonymModel::getCount($search),
+            ]
+        );
     }
 
     public function actionGetPartTypes()
@@ -55,10 +56,5 @@ class TmController extends Controller
         return $this->asJson(TmPartType::create($name));
     }
 
-    public function actionPost()
-    {
-        if (\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-    }
+
 }
