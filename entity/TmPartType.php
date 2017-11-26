@@ -15,6 +15,11 @@ use yii\db\ActiveRecord;
  */
 class TmPartType extends ActiveRecord
 {
+
+    public static function tableName()
+    {
+        return '{{tm_part_types}}';
+    }
     /**
      * @param $title
      * @return bool
@@ -40,10 +45,5 @@ class TmPartType extends ActiveRecord
         $rec->save();
 
         return $rec;
-    }
-
-    public static function tableName()
-    {
-        return '{{tm_part_types}}';
     }
 }

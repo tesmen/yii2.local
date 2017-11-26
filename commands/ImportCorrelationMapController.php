@@ -24,7 +24,7 @@ class ImportCorrelationMapController extends Controller
             if (empty($tmName)) {
                 continue;
             }
-            $res = \app\entity\CorrelationMap::createSafe($tmName, $code, $vedName);
+            $res = \app\entity\TmPartSynonym::createSafe($tmName, $code, $vedName);
 
             if ($res) {
                 $saved++;

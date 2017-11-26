@@ -8,8 +8,10 @@
 namespace app\commands;
 
 use app\entity\TmPart;
+use app\entity\TmPartSynonym;
 use app\models\PartsRecognizer\PartCodeDetector;
 use app\models\PartsRecognizer\PartMaterialDetector;
+use app\models\TmPartSynonymModel;
 use app\util\TextManipulator;
 use yii\console\Controller;
 use yii\log\Logger;
@@ -28,7 +30,7 @@ class HelloController extends Controller
 //            'Труба 140х8 ГОСТ8732-78/В10 ГОСТ8731-74 (внутренний диаметр расточить до 125)'
 //        );
 
-        $code = \app\entity\CorrelationMap::createSafe(1,2,3);
+        $code = TmPartSynonymModel::createSafe('one kpart',33);
         var_export($code);
     }
 }

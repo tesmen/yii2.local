@@ -26,6 +26,11 @@ class TmPart extends ActiveRecord
 {
     private static $cache;
 
+    public static function tableName()
+    {
+        return '{{tm_parts}}';
+    }
+
     public static function create($title)
     {
         $e = new static();
@@ -34,11 +39,6 @@ class TmPart extends ActiveRecord
         $e->ob = $title;
         $e->save();
 
-    }
-
-    public static function tableName()
-    {
-        return '{{tm_parts}}';
     }
 
     /**

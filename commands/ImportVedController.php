@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use app\entity\TmPart;
+use app\models\TmPartSynonymModel;
 use app\traits\ConsoleParamsTrait;
 use yii\console\Controller;
 
@@ -17,12 +18,13 @@ class ImportVedController extends Controller
         $saved = 0;
 
         foreach ($data as $row) {
-            if (empty($row[3])) {
+            $kod = mb_strtolower($row[3]);
+            $rawName = $row[7];
+            if (empty($kod)) {
                 continue;
             }
 
-            $kod = mb_strtolower($row[3]);
-            $detailName = mb_strtolower($row[7]);
+            $detailName = mb_strtolower($rawName);
 
             if (TmPart::findOne(['kod' => $kod])) {
                 $dupes++;
@@ -33,6 +35,7 @@ class ImportVedController extends Controller
             $rec->kod = $kod;
             $rec->raw_name = $detailName;
             $rec->save();
+            TmPartSynonymModel::createSafe($detailName, $kod);
 
             $saved++;
         }

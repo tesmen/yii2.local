@@ -9,41 +9,31 @@ use yii\db\ActiveRecord;
  * @package app\models
  *
  * @property $id
- * @property $tm_name
+ * @property $name
  * @property $code
- * @property $ved_name
  *
  */
-class CorrelationMap extends ActiveRecord
+class TmPartSynonym extends ActiveRecord
 {
     private static $cache;
 
-    public static function create($title, $code, $vedName)
+    public static function tableName()
+    {
+        return '{{tm_part_synonyms}}';
+    }
+
+    public static function create($title, $code)
     {
         $e = new static();
 
-        $e->tm_name = $title;
+        $e->name = $title;
         $e->code = $code;
-        $e->ved_name = $vedName;
 
         return $e->save()
             ? $e
             : false;
     }
 
-    public static function createSafe($title, $code, $vedName)
-    {
-        if (static::findOne(['code' => $code])) {
-            return false;
-        }
-
-        return static::create($title, $code, $vedName);
-    }
-
-    public static function tableName()
-    {
-        return '{{tm_correlation_map}}';
-    }
 
     /**
      * @return array|TmPart[]
@@ -70,7 +60,7 @@ class CorrelationMap extends ActiveRecord
 
     /**
      * @param $code
-     * @return CorrelationMap
+     * @return TmPartSynonym
      */
     public static function findByCode($code)
     {
