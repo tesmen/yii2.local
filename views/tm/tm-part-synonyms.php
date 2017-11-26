@@ -3,11 +3,12 @@
     <ng-view></ng-view>
 
     <script type="text/ng-template" id="list.html">
-        <table class="table table-bordered table-condensed table-hover ">
+        <table class="table table-bordered table-condensed table-hover " >
             <thead>
             <tr>
                 <td>
                 </td>
+
                 <td>
                     <input class="form-control" placeholder="Поиск">
                 </td>
@@ -28,15 +29,16 @@
                 <td class="text-center">
                     ID
                 </td>
+
                 <td class="text-center">
                     Код
                 </td>
 
-                <td class="text-center">
+                <td class="text-center" >
                     Назв. ведомости
                 </td>
 
-                <td class="text-center">
+                <td class="text-center" >
                     Синонимы
                 </td>
 
@@ -54,17 +56,17 @@
                     {{row.code}}
                 </td>
 
-                <td>
+                <td style="word-break: break-all">
                     {{row.raw_name}}
                 </td>
 
-                <td>
+                <td style="word-break: break-all">
                     <div ng-repeat="synonym in row.synonyms">
                         - <span>{{synonym.name}}</span>
                     </div>
                 </td>
 
-                <td>
+                <td >
                     <button class="btn btn-sm btn-default btn-primary">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
