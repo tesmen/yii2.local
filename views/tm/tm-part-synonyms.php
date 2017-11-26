@@ -96,11 +96,6 @@
 
         <div class="row">
             <div class="col-xs-4">
-
-            </div>
-
-            <div class="col-xs-2 text-right">
-                <add-button click-callback="createPartType()"></add-button>
             </div>
         </div>
 
@@ -148,7 +143,7 @@
 
                 <a class="pull-right" href click-to-prompt popup-title="Новый синоним" popup-text="asd"
                    callback="createSynonym">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-plus"></span>
                     Добавить
                 </a>
 
@@ -156,13 +151,14 @@
                     <div class="col-xs-12">
                         <ul class="list-group">
                             <li class="list-group-item" ng-repeat="synonym in  partData.synonyms">
-                                <span class="badge cursor-pointer">
-                                    <span class="glyphicon glyphicon-remove"
-                                          ng-click="deleteSynonym(synonym.id)"></span>
+                                <span class="badge cursor-pointer" ng-click="deleteSynonym(synonym.id)">
+                                    <span class="glyphicon glyphicon-remove"></span>
                                 </span>
 
-                                <span class="badge cursor-pointer">
-                                    <span class="glyphicon glyphicon-pencil" ng-click="editSynonym(synonym.id)"></span>
+                                <span class="badge cursor-pointer" click-to-prompt popup-title="Новый синоним"
+                                      popup-text="asd"
+                                      callback="updateSynonym" add-data="synonym">
+                                    <span class="glyphicon glyphicon-pencil"></span>
                                 </span>
                                 {{synonym.name}}
                             </li>
@@ -212,6 +208,15 @@
                     params: {id: id}
                 }
             );
+        };
+
+        this.updateSynonymPromise = function (id, name) {
+            return $http({
+                    url: BASE_URL + 'update-part-synonym',
+                    method: "POST",
+                    params: {id: id, name: name}
+                }
+            );
         }
     }
 
@@ -219,20 +224,32 @@
         $scope.createSynonym = function (name) {
             partsService.createSynonymPromise($routeParams.id, name)
                 .then(function (res) {
+                    Notification.success('Success');
                     $scope.getPartData();
                 })
         };
 
         $scope.deleteSynonym = function (id) {
-            partsService.deleteSynonymPromise().then(function () {
+            partsService.deleteSynonymPromise(id).then(function () {
                     Notification.success('Success');
+                    $scope.getPartData();
                 },
                 function () {
                     Notification.error('Error....');
+                    $scope.getPartData();
                 });
         };
 
-        $scope.editSynonym = function () {
+        $scope.updateSynonym = function (name, record) {
+            partsService.updateSynonymPromise(record.id, name).then(function () {
+                    Notification.success('Success');
+                    $scope.getPartData();
+                },
+                function () {
+                    Notification.error('Error....');
+                    $scope.getPartData();
+                }
+            );
         };
 
         $scope.getPartData = function () {

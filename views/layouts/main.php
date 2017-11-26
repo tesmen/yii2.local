@@ -51,9 +51,11 @@ AppAsset::register($this);
             ],
         ]
     );
-    $login = ['label' => 'Login', 'url' => ['/site/login']];
 
-    $else = (
+
+   $button= Yii::$app->user->isGuest
+        ? ['label' => 'Login', 'url' => ['/site/login']]
+        : (
         '<li>'
         . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
         . Html::submitButton(
@@ -71,9 +73,7 @@ AppAsset::register($this);
                 ['label' => 'TM Parts', 'url' => ['/tm/part-synonyms']],
                 ['label' => 'TM', 'url' => ['/tm/part-types']],
                 ['label' => 'Meetings', 'url' => ['/meetings']],
-                Yii::$app->user->isGuest
-                    ? $login
-                    : $else,
+                $button
             ],
         ]
     );

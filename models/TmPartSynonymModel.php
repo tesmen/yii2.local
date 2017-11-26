@@ -17,6 +17,18 @@ class TmPartSynonymModel
         return TmPartSynonym::create($name, $partId);
     }
 
+    public static function update($name, $synonymId)
+    {
+        $rec = TmPartSynonym::findById($synonymId);
+
+        if (!$rec) {
+            return false;
+        }
+        $rec->name = $name;
+
+        return $rec->save();
+    }
+
     public static function getPartSynonyms($id)
     {
         $rec = TmPart::find()->where(['id' => $id]);

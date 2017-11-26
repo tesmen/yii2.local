@@ -63,7 +63,7 @@ class TmController extends Controller
         $name = $this->getQueryParams('name');
         $partId = $this->getQueryParams('id');
 
-        return $this->asJson(TmPartSynonymModel::createSafe($name, $partId));
+        return $this->asJson(TmPartSynonymModel::update($name, $partId));
     }
 
     public function actionSaveSynonym()

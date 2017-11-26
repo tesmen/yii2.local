@@ -510,7 +510,7 @@ function clickToPopupDirective() {
 }
 
 function clickToPromptDirective() {
-    function popupCtrl($scope, $uibModalInstance, text, title, label, placeholder, maxLength) {
+    function popupCtrl($scope, $uibModalInstance, text, preEnteredText, title, label, placeholder, maxLength) {
         $scope.modal = {};
         $scope.modal.text = text;
         $scope.modal.title = title;
@@ -540,6 +540,7 @@ function clickToPromptDirective() {
     return {
         restrict: 'A',
         scope: {
+            addData: '=',
             popupTitle: '@',
             popupText: '@',
             popupLabel: '@',
@@ -552,13 +553,16 @@ function clickToPromptDirective() {
         },
         controller: function ($scope, $uibModal) {
             var onPopupClose = function (value) {
-                $scope.callback(value)
+                $scope.callback(value, $scope.addData)
             };
 
             var settings = {
                 templateUrl: '/views/common/popups/simple-prompt-popup.html',
                 controller: popupCtrl,
                 resolve: {
+                    preEnteredText: function () {
+                        return $scope.preEnteredText;
+                    },
                     text: function () {
                         return $scope.popupText;
                     },
@@ -579,12 +583,6 @@ function clickToPromptDirective() {
 
             $scope.showPopup = function () {
                 var modalInstance = $uibModal.open(settings).result.then(onPopupClose);
-
-                // modalInstance.result.then(function (selectedItem) {
-                //     $ctrl.selected = selectedItem;
-                // }, function () {
-                //     $log.info('Modal dismissed at: ' + new Date());
-                // });
             };
         }
     };
