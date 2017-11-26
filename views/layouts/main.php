@@ -44,7 +44,7 @@ AppAsset::register($this);
     NavBar::begin(
         [
             'brandLabel' => 'VZ Meetings',
-            'brandUrl'   => Yii::$app->homeUrl,
+            'brandUrl'   => '/',
             'options'    => [
                 'class' => 'navbar-inverse navbar-fixed-top',
             ],

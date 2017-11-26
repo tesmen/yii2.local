@@ -64,7 +64,7 @@ class TmPartSynonymModel
         $q = (new \yii\db\Query())
             ->select(['DISTINCT(tp.id)'])
             ->from('tm_parts tp')
-            ->join('JOIN', 'tm_part_synonyms tps','tp.id = tps.part_id')
+            ->join('JOIN', 'tm_part_synonyms tps', 'tp.id = tps.part_id')
             ->where($criteria)
             ->where("tps.name LIKE '%фла%'")
             ->offset($search->getOffset())
@@ -75,11 +75,11 @@ class TmPartSynonymModel
         }
 
         if ($search->ved_name) {
-            $q->where("tp.raw_name LIKE '%$search->ved_name%'");
+            $q->where("LOWER(tp.raw_name) LIKE LOWER('%{$search->ved_name}%')");
         }
 
         if ($search->synonym) {
-            $q->where("tps.name LIKE '%$search->synonym'");
+            $q->where("LOWER(tps.name) LIKE LOWER('%{$search->synonym}%')");
         }
 
         return $q;
