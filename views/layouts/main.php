@@ -67,6 +67,7 @@ AppAsset::register($this);
         [
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items'   => [
+                ['label' => 'TM Syns', 'url' => ['/tm/part-synonyms']],
                 ['label' => 'TM', 'url' => ['/tm/part-types']],
                 ['label' => 'Meetings', 'url' => ['/meetings']],
                 Yii::$app->user->isGuest

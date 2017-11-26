@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\entity\TmPartSynonym;
+use app\models\Search\SynonymsSearch;
 
 class TmPartSynonymModel
 {
@@ -13,5 +14,34 @@ class TmPartSynonymModel
         }
 
         return TmPartSynonym::create($name, $code);
+    }
+
+    public static function search(SynonymsSearch $search)
+    {
+        $criteria = [];
+
+        if (!empty($search->code)) {
+            $criteria['tp.code'] = $search->code;
+        }
+
+        if (!empty($search->ved_name)) {
+            $criteria['tp.code'] = $search->code;
+        }
+
+        if (!empty($search->code)) {
+            $criteria['tp.code'] = $search->code;
+        }
+
+        $q = (new \yii\db\Query())
+            ->select(['DISTINCT(tp.id)'])
+            ->from('tm_parts tp')
+            ->join('JOIN', 'tm_part_synonyms')
+            ->where($criteria)
+            ->offset($search->getOffset())
+            ->limit($search->limit);
+
+        $data = $q->column();
+
+        return $data;
     }
 }
