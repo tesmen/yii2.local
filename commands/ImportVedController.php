@@ -13,18 +13,24 @@ class ImportVedController extends Controller
 
     public function actionIndex($filename)
     {
+        $this->writeln('start');
+
         $data = $this->parseCsvFile($filename);
         $dupes = 0;
         $saved = 0;
 
         foreach ($data as $row) {
-            $kod = mb_strtolower($row[3]);
-            $rawName = $row[7];
-            if (empty($kod)) {
+            $kod = empty($row[3])
+                ? null
+                : mb_strtolower($row[3]);
+
+            $rawName = empty($row[7])
+                ? null
+                : $row[7];
+
+            if (empty($kod) || empty($rawName)) {
                 continue;
             }
-
-            $detailName = mb_strtolower($rawName);
 
             if (TmPart::findOne(['kod' => $kod])) {
                 $dupes++;
@@ -33,22 +39,22 @@ class ImportVedController extends Controller
 
             $rec = new TmPart();
             $rec->kod = $kod;
-            $rec->raw_name = $detailName;
+            $rec->raw_name = $rawName;
             $rec->save();
-            TmPartSynonymModel::createSafe($detailName, $kod);
+            TmPartSynonymModel::createSafe(mb_strtolower($rawName), $kod);
 
             $saved++;
         }
 
-        $all = sizeof( $data);
+        $all = sizeof($data);
         $this->writeln("Dupes: $dupes");
         $this->writeln("imported: $saved");
         $this->writeln("all: $all");
+        $this->writeln('finished');
     }
 
     public function parseCsvFile($file)
     {
         return array_map('str_getcsv', file($file));
     }
-
 }
