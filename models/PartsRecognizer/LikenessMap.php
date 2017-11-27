@@ -38,7 +38,7 @@ class LikenessMap
             $this->partsMetaData[] = [
                 'id'    => $type->id,
                 'words' => $words,
-                'code'  => $type->kod,
+                'code'  => $type->code,
             ];
         }
     }

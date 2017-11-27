@@ -17,6 +17,7 @@ class GenerateTmPartTypesController extends Controller
     {
         $c = 0;
         $tmParts = TmPart::getAll();
+        $all = sizeof($tmParts);
 
         foreach ($tmParts as $row) {
             $words = PartNameStripper::stripToArray($row->raw_name);
@@ -33,8 +34,9 @@ class GenerateTmPartTypesController extends Controller
             }
 
             if ($c % 100 === 0) {
-                $this->writeln($c);
+                $this->writeln("$c / $all");
             }
+            $c++;
         }
     }
 }

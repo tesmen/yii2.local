@@ -30,6 +30,7 @@ class TmController extends Controller
         if (\Yii::$app->request->isPost) {
             $file = UploadedFile::getInstanceByName('file');
             move_uploaded_file($file->tempName, \app\services\FileService::getBatchDir($file->name));
+
             $stat = TmCsvFileProcessor::instance($file->name)
                 ->setBatch(true)
                 ->processFile();
