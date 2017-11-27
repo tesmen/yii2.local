@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
  * @property $id
  * @property $name
  * @property $part_id
- *
+ * @method static TmPartSynonym findOne($c)
  */
 class TmPartSynonym extends ActiveRecord
 {

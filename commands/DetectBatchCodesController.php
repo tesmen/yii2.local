@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\models\FileProcessor\TmCsvFileProcessor;
+use app\models\FileProcessor\SmartFileProcessor;
 use app\services\FileService;
 use app\traits\ConsoleParamsTrait;
 use yii\console\Controller;
@@ -27,7 +27,7 @@ class DetectBatchCodesController extends Controller
         $this->writeln("---------------------------------------------");
         $this->writeln("start $filename");
 
-        $stat = TmCsvFileProcessor::instance($filename)
+        $stat = SmartFileProcessor::instance($filename)
             ->setCodeColumn(4)
             ->setNameColumn(3)
             ->processFile();

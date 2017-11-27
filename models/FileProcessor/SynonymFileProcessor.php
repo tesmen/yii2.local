@@ -3,10 +3,11 @@
 namespace app\models\FileProcessor;
 
 use app\entity\TmPartSynonym;
+use app\models\PartsRecognizer\BySynonymCodeDetector;
 use app\models\PartsRecognizer\PartCodeDetector;
 use app\services\FileService;
 
-class TmCsvFileProcessor
+class SynonymFileProcessor
 {
     private $fileName;
     private $stat;
@@ -23,7 +24,7 @@ class TmCsvFileProcessor
 
     /**
      * @param mixed $batch
-     * @return TmCsvFileProcessor
+     * @return $this
      */
     public function setBatch($batch)
     {
@@ -63,7 +64,7 @@ class TmCsvFileProcessor
                 continue;
             }
 
-            $code = PartCodeDetector::instance()->detect($name);
+            $code = BySynonymCodeDetector::instance()->detect($name);
 
             if ($code) {
                 $this->stat->detectedRows++;
@@ -114,7 +115,7 @@ class TmCsvFileProcessor
 
     /**
      * @param int $codeColumn
-     * @return TmCsvFileProcessor
+     * @return $this
      */
     public function setCodeColumn($codeColumn)
     {
@@ -125,7 +126,7 @@ class TmCsvFileProcessor
 
     /**
      * @param int $nameColumn
-     * @return TmCsvFileProcessor
+     * @return $this
      */
     public function setNameColumn($nameColumn)
     {

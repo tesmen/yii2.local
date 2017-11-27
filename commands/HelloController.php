@@ -30,7 +30,7 @@ class HelloController extends Controller
 //            'Труба 140х8 ГОСТ8732-78/В10 ГОСТ8731-74 (внутренний диаметр расточить до 125)'
 //        );
 
-        $code = TmPartSynonymModel::createSafe('one kpart',33);
+        $code = \app\models\PartsRecognizer\BySynonymCodeDetector::instance()->detect(01);
         var_export($code);
     }
 }

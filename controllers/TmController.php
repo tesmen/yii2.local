@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\entity\TmPartSynonym;
 use app\entity\TmPartType;
-use app\models\FileProcessor\TmCsvFileProcessor;
+use app\models\FileProcessor\SmartFileProcessor;
 use app\models\Search\SynonymsSearch;
 use app\models\TmPartSynonymModel;
 use app\traits\ControllerTrait;
@@ -31,7 +31,7 @@ class TmController extends Controller
             $file = UploadedFile::getInstanceByName('file');
             move_uploaded_file($file->tempName, \app\services\FileService::getBatchDir($file->name));
 
-            $stat = TmCsvFileProcessor::instance($file->name)
+            $stat = SmartFileProcessor::instance($file->name)
                 ->setBatch(true)
                 ->processFile();
             var_export($stat);

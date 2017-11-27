@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use app\entity\TmPart;
+use app\models\TmPartSynonymModel;
 use app\traits\ConsoleParamsTrait;
 use yii\console\Controller;
 
@@ -24,7 +25,10 @@ class ImportCorrelationMapController extends Controller
             if (empty($tmName)) {
                 continue;
             }
-            $res = \app\entity\TmPartSynonym::createSafe($tmName, $code, $vedName);
+            /**
+             * todo here
+             */
+            $res = TmPartSynonymModel::createSafe($tmName, $code, $vedName);
 
             if ($res) {
                 $saved++;
