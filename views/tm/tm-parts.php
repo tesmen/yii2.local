@@ -140,7 +140,7 @@
                     Синонимы
                 </label>
 
-                <a class="pull-right" href click-to-prompt popup-title="Новый синоним" popup-text="asd"
+                <a class="pull-right" href click-to-prompt popup-title="Новый синоним" popup-text="Введите название"
                    callback="createSynonym">
                     <span class="glyphicon glyphicon-plus"></span>
                     Добавить
