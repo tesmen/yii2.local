@@ -10,14 +10,26 @@ class TmCsvFileProcessor
 {
     private $fileName;
     private $stat;
+    private $batch;
     private $codeColumn = 3;
     private $nameColumn = 7;
 
     private function __construct($fileName)
     {
         $this->fileName = $fileName;
-        $this->stat = new ProcessedFile();
+        $this->stat = new ProcessedFileStat();
         $this->stat->fileName = $fileName;
+    }
+
+    /**
+     * @param mixed $batch
+     * @return TmCsvFileProcessor
+     */
+    public function setBatch($batch)
+    {
+        $this->batch = (bool)$batch;
+
+        return $this;
     }
 
     public static function instance($filename)
@@ -26,16 +38,25 @@ class TmCsvFileProcessor
     }
 
     /**
-     * @return ProcessedFile
+     * @return ProcessedFileStat
      */
     public function processFile()
     {
-        $data = $this->parseCsvFile(FileService::getBatchDir($this->fileName));
+        $filename = $this->batch
+            ? FileService::getBatchDir($this->fileName)
+            : $this->fileName;
+
+        $data = $this->parseCsvFile($filename);
         $this->stat->totalRows = sizeof($data);
 
         foreach ($data as &$row) {
-            $name = $row[$this->nameColumn];
-            $existedCode = $row[$this->codeColumn];
+            $name = isset($row[$this->nameColumn])
+                ? $row[$this->nameColumn]
+                : null;
+
+            $existedCode = isset($row[$this->codeColumn])
+                ? $row[$this->codeColumn]
+                : null;
 
             if (empty($name) || !empty($existedCode)) {
                 $this->stat->skippedRows++;
@@ -66,14 +87,18 @@ class TmCsvFileProcessor
         return $this->stat;
     }
 
-    public function parseCsvFile($file)
+    private function parseCsvFile($file)
     {
         return array_map('str_getcsv', file($file));
     }
 
     public function saveCsvFile(array $rows, $filename)
     {
-        $output = fopen(FileService::getOutputDir($filename), 'w');
+        $realFilename = $this->batch
+            ? FileService::getOutputDir($filename)
+            : $this->fileName;
+
+        $output = fopen($realFilename, 'w');
 
         if (true) {
             $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility

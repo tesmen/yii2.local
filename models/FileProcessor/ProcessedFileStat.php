@@ -3,7 +3,7 @@
 namespace app\models\FileProcessor;
 
 
-class ProcessedFile
+class ProcessedFileStat
 {
     public $fileName;
     public $totalRows = 0;

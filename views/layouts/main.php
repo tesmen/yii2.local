@@ -71,8 +71,8 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items'   => [
                 ['label' => 'TM Parts', 'url' => ['/tm/part-synonyms']],
-                ['label' => 'TM', 'url' => ['/tm/part-types']],
-                ['label' => 'Meetings', 'url' => ['/meetings']],
+//                ['label' => 'TM', 'url' => ['/tm/part-types']],
+                ['label' => 'Parse TM', 'url' => ['/tm/parse-file']],
                 $button
             ],
         ]

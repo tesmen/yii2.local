@@ -40,7 +40,6 @@
                                 Поиск <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </td>
-
                     </tr>
 
                     <tr>
