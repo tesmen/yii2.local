@@ -23,11 +23,11 @@ class TmPartSynonym extends ActiveRecord
         return '{{tm_part_synonyms}}';
     }
 
-    public static function create($title, $partId)
+    public static function create($name, $partId)
     {
         $e = new static();
 
-        $e->name = $title;
+        $e->name = trim($name);
         $e->part_id = $partId;
 
         return $e->save()
