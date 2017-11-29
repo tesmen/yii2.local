@@ -2,10 +2,8 @@
 
 namespace app\models\FileProcessor;
 
-use app\entity\TmPartSynonym;
+use app\entity\TmPart;
 use app\models\PartsRecognizer\BySynonymCodeDetector;
-use app\models\PartsRecognizer\PartCodeDetector;
-use app\services\FileService;
 
 class SynonymFileProcessor extends AbstractFileProcessor
 {
@@ -30,18 +28,14 @@ class SynonymFileProcessor extends AbstractFileProcessor
                 continue;
             }
 
-            $code = BySynonymCodeDetector::instance()->detect($name);
+            $synonymicPart = BySynonymCodeDetector::instance()->detect($name);
 
-            if ($code) {
+            if ($synonymicPart) {
+                $realPart = TmPart::findOne(['id' => $synonymicPart->part_id]);
+
                 $this->stat->detectedRows++;
-                $row[$this->codeColumn] = implode('; ', $code);
+                $row[$this->codeColumn] = $realPart->code;
                 $row[29] = 'auto';
-
-                $correlationDetail = TmPartSynonym::findByCode($code);
-
-                if ($correlationDetail) {
-                    $row[30] = $correlationDetail->ved_name;
-                }
             } else {
                 $this->stat->unDetectedRows++;
             }

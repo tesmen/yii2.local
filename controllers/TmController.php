@@ -34,10 +34,12 @@ class TmController extends Controller
             move_uploaded_file($file->tempName, FileService::getBatchDir($file->name));
 
             $data = SynonymFileProcessor::instance($file->name)
+                ->setCodeColumn(4)
+                ->setNameColumn(3)
                 ->setBatch(true)
                 ->processFile();
-            var_export($data);die;
-            return $this->csvFileResponse('asd.csv', $data);
+
+            return $this->csvFileResponse($file->name, $data);
         }
 
         return $this->render('tm-parse-file');

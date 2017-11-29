@@ -27,14 +27,13 @@ class BySynonymCodeDetector implements DetectorInterface
 
     /**
      * @param $str
-     * @return array|bool|string[]
+     * @return TmPartSynonym
      */
     public function detect($str)
     {
-        $rec = TmPartSynonym::findOne(['name' => PartNameStripper::stripToString($str)]);
-
-        return $rec
-            ? $rec->name
-            : false;
+        return TmPartSynonym::findBySql(
+            "SELECT * FROM tm_part_synonyms WHERE trim(LOWER(name)) = trim(LOWER(:str))",
+            ['str' => $str]
+        )->one();
     }
 }
