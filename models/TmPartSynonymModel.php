@@ -86,7 +86,7 @@ class TmPartSynonymModel
             ->limit($search->limit);
 
         if ($search->code) {
-            $q->where("tp.code LIKE '%$search->code%'");
+            $q->where("tp.code LIKE '$search->code'");
         }
 
         if ($search->ved_name) {

@@ -21,7 +21,7 @@
                         </td>
 
                         <td>
-                            <input class="form-control" placeholder="Поиск" ng-model="search.code"
+                            <input class="form-control" placeholder="%1206%" ng-model="search.code"
                                    fast-enter="getData()">
                         </td>
 
