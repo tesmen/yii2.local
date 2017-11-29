@@ -62,10 +62,9 @@ abstract class AbstractFileProcessor
 
     public function processFile()
     {
-        $this
-            ->prepareFile()
-            ->getRows()
-            ->processRows();
+        $this->prepareFile();
+        $this->getRows();
+        return $this->processRows();
     }
 
     /**

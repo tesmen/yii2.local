@@ -18,10 +18,9 @@ class XslxFileProcessor extends AbstractFileProcessor
 
     public function processRows()
     {
-        $data = $this->parseCsvFile($this->filePath);
+        $data = $this->parseCsvFile(FileService::getBatchDir($this->fileName));
         $this->stat->totalRows = sizeof($data);
-        var_export($data);
-        die;
+
         foreach ($data as &$row) {
             $name = isset($row[$this->nameColumn])
                 ? $row[$this->nameColumn]

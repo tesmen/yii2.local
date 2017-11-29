@@ -40,7 +40,7 @@ class TmController extends Controller
                 ->setNameColumn(3)
                 ->processFile();
 
-            return $this->csvFileResponse($file->name, $data);
+            return $this->csvFileResponse($file->name . '.csv', $data);
         }
 
         return $this->render('tm-parse-file');
