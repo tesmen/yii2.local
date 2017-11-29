@@ -5,6 +5,21 @@
 
     <script type="text/ng-template" id="list.html">
         <div class="row">
+            <div class="col-xs-3">
+                <input class="form-control" placeholder="Код" ng-model="newRecord.code" fast-enter="createPart()">
+            </div>
+            <div class="col-xs-7">
+                <input class="form-control" placeholder="Название" ng-model="newRecord.name" fast-enter="createPart()">
+            </div>
+            <div class="col-xs-2 text-right">
+                <button class="btn btn-sm btn-default btn-success" ng-click="createPart()">
+                    Добавить <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        </div>
+
+        <div class="row">
             <div class="col-xs-12 text-center">
                 <ul uib-pagination total-items="totalItems" ng-model="search.page" ng-change="searchChanged()"
                     max-size="10">
@@ -191,6 +206,15 @@
             );
         };
 
+        this.createPartPromise = function (code, name) {
+            return $http({
+                    url: BASE_URL + 'create-part',
+                    method: "POST",
+                    params: {code: code, name: name}
+                }
+            );
+        };
+
         this.createSynonymPromise = function (id, name) {
             return $http({
                     url: BASE_URL + 'create-part-synonym',
@@ -263,13 +287,36 @@
         $scope.getPartData();
     }
 
-    function SynonymsCtrl($scope, $location, $timeout, partsService) {
+    function SynonymsCtrl($scope, $location, $timeout, partsService, Notification) {
+        $scope.newRecord = {};
         $scope.search = {
             code: ''
         };
 
         $scope.totalItems = 100;
-        $scope.currentPage = 3;
+        $scope.currentPage = 1;
+
+        $scope.createPart = function () {
+            if (!$scope.newRecord.code || !$scope.newRecord.name) {
+                Notification.error('Не заполнены поля');
+                return;
+            }
+
+            partsService
+                .createPartPromise($scope.newRecord.code, $scope.newRecord.name)
+                .then(function (res) {
+                        if (res.data.success) {
+                            Notification.success('Success');
+                            $scope.newRecord = {};
+                        } else {
+                            Notification.error('Error');
+                        }
+                    },
+                    function (res) {
+                        Notification.error('Error');
+                    }
+                );
+        };
 
         $scope.editPart = function (id) {
             $location.path('/edit/' + id);
@@ -287,7 +334,6 @@
                 .then(function (response) {
                     $scope.rows = response.data.items;
                     $scope.totalItems = response.data.total;
-                    console.log($scope.rows)
                 });
         };
 
