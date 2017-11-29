@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\entity\TmPartSynonym;
 use app\entity\TmPartType;
 use app\models\FileProcessor\SmartFileProcessor;
+use app\models\FileProcessor\SynonymFileProcessor;
 use app\models\Search\SynonymsSearch;
 use app\models\TmPartSynonymModel;
 use app\traits\ControllerTrait;
@@ -32,10 +33,10 @@ class TmController extends Controller
             $file = UploadedFile::getInstanceByName('file');
             move_uploaded_file($file->tempName, FileService::getBatchDir($file->name));
 
-            $data = SmartFileProcessor::instance($file->name)
+            $data = SynonymFileProcessor::instance($file->name)
                 ->setBatch(true)
                 ->processFile();
-
+            var_export($data);die;
             return $this->csvFileResponse('asd.csv', $data);
         }
 
