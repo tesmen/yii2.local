@@ -79,14 +79,14 @@ class TmPartSynonymModel
         $q = (new \yii\db\Query())
             ->select(['DISTINCT(tp.id)'])
             ->from('tm_parts tp')
-            ->join('JOIN', 'tm_part_synonyms tps', 'tp.id = tps.part_id')
+            ->join('LEFT JOIN', 'tm_part_synonyms tps', 'tp.id = tps.part_id')
             ->where($criteria)
             ->where("tps.name LIKE '%фла%'")
             ->offset($search->getOffset())
             ->limit($search->limit);
 
         if ($search->code) {
-            $q->where("tp.code = $search->code");
+            $q->where("tp.code LIKE '%$search->code%'");
         }
 
         if ($search->ved_name) {

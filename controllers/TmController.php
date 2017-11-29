@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\entity\TmPart;
 use app\entity\TmPartSynonym;
 use app\entity\TmPartType;
 use app\models\FileProcessor\SmartFileProcessor;
@@ -49,6 +50,22 @@ class TmController extends Controller
     public function actionPartSynonyms()
     {
         return $this->render('tm-parts');
+    }
+
+    public function actionCreatePart()
+    {
+        $name = $this->getQueryParams('name');
+        $code = $this->getQueryParams('code');
+        $part = new TmPart;
+
+        try {
+            $part->raw_name = trim($name);
+            $part->code = $code;
+            $part->save();
+            return $this->jsonSuccessResponse();
+        } catch (\Exception $e) {
+            return $this->jsonFailureResponse($e->getMessage());
+        }
     }
 
     public function actionGetSynonyms()

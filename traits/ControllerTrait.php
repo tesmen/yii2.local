@@ -72,11 +72,11 @@ trait ControllerTrait
     }
 
 
-    private function getResult($value = [], $message = '', $isSuccessful = true)
+    private function getResult($value = [], $message = '', $success = true)
     {
         return [
-            'data' => $value,
-            'success' => $isSuccessful,
+            'data'    => $value,
+            'success' => $success,
             'message' => $message,
         ];
     }
@@ -90,6 +90,7 @@ trait ControllerTrait
      */
     private function jsonActionResponse($res = true, $message = '', $data = [])
     {
+        return $this->asJson($this->getResult($data, $message, $res));
 //        return $this->setResponse($this->getResult($data, $message, (bool)$res));
     }
 
@@ -100,7 +101,7 @@ trait ControllerTrait
      */
     private function jsonSuccessResponse($data = [], $message = '')
     {
-//        return $this->setResponse($this->getResult($data, $message));
+        return $this->asJson($this->getResult($data, $message, true));
     }
 
     /**
@@ -110,7 +111,7 @@ trait ControllerTrait
      */
     private function jsonFailureResponse($message = '', $data = [])
     {
-//        return $this->setResponse($this->getResult($data, $message, false));
+        return $this->asJson($this->getResult($data, $message, false));
     }
 
     /**
@@ -168,7 +169,8 @@ trait ControllerTrait
     /**
      * @return bool
      */
-    private function stopApplication(){
+    private function stopApplication()
+    {
         die;
     }
 
