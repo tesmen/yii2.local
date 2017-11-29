@@ -7,7 +7,7 @@ use app\models\PartsRecognizer\PartCodeDetector;
 
 class SmartFileProcessor extends AbstractFileProcessor
 {
-    public function processFile()
+    public function processRows()
     {
         $filename = $this->getRealFilePath();
 

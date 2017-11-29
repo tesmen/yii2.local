@@ -6,6 +6,7 @@ use app\entity\TmPartSynonym;
 use app\entity\TmPartType;
 use app\models\FileProcessor\SmartFileProcessor;
 use app\models\FileProcessor\SynonymFileProcessor;
+use app\models\FileProcessor\XslxFileProcessor;
 use app\models\Search\SynonymsSearch;
 use app\models\TmPartSynonymModel;
 use app\traits\ControllerTrait;
@@ -31,12 +32,12 @@ class TmController extends Controller
     {
         if (\Yii::$app->request->isPost) {
             $file = UploadedFile::getInstanceByName('file');
-            move_uploaded_file($file->tempName, FileService::getBatchDir($file->name));
+            $uploadedPath = FileService::getUploadDir(md5($file->tempName) . '.' . $file->getExtension());
+            move_uploaded_file($file->tempName, $uploadedPath);
 
-            $data = SynonymFileProcessor::instance($file->name)
+            $data = XslxFileProcessor::instance($uploadedPath)
                 ->setCodeColumn(4)
                 ->setNameColumn(3)
-                ->setBatch(true)
                 ->processFile();
 
             return $this->csvFileResponse($file->name, $data);

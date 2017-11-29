@@ -8,17 +8,21 @@ use app\services\FileService;
 
 abstract class AbstractFileProcessor
 {
+    protected $filePath;
     protected $fileName;
     protected $stat;
     protected $batch;
     protected $codeColumn = 3;
     protected $nameColumn = 7;
 
-    private function __construct($fileName)
+    private function __construct($filePath)
     {
-        $this->fileName = $fileName;
+        $parts = explode(DIRECTORY_SEPARATOR, $filePath);
+        $this->filePath = $filePath;
+        $this->fileName = end($parts);
+
         $this->stat = new ProcessedFileStat();
-        $this->stat->fileName = $fileName;
+        $this->stat->fileName = $filePath;
     }
 
     /**
@@ -37,30 +41,62 @@ abstract class AbstractFileProcessor
      */
     public function getRealFilePath()
     {
-        return  $this->batch
-            ? FileService::getBatchDir($this->fileName)
-            : $this->fileName;
+        return $this->batch
+            ? FileService::getBatchDir($this->filePath)
+            : $this->filePath;
     }
 
-    public static function instance($filename)
+    public static function instance($filePath)
     {
-        return new static($filename);
+        return new static($filePath);
     }
 
     public function processAndSaveFile()
     {
-        $data = $this->processFile();
+        $data = $this->processRows();
 
-        $this->saveCsvFile($data, $this->fileName);
+        $this->saveCsvFile($data, $this->filePath);
 
         return $this->stat;
+    }
+
+    public function processFile()
+    {
+        $this
+            ->prepareFile()
+            ->getRows()
+            ->processRows();
     }
 
     /**
      * @return array
      */
-    abstract function processFile();
+    abstract function processRows();
 
+    /**
+     * @return $this
+     */
+    protected function prepareFile()
+    {
+        return $this;
+    }
+
+    protected function getRows()
+    {
+        return $this;
+    }
+
+    protected function postProcess()
+    {
+
+        return $this;
+    }
+
+    protected function getFileName()
+    {
+
+        return $this->fileName;
+    }
 
     protected function parseCsvFile($file)
     {
@@ -71,7 +107,7 @@ abstract class AbstractFileProcessor
     {
         $realFilename = $this->batch
             ? FileService::getOutputDir($filename)
-            : $this->fileName;
+            : $this->filePath;
 
         $output = fopen($realFilename, 'w');
 

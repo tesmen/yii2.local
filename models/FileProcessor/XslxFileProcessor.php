@@ -3,17 +3,25 @@
 namespace app\models\FileProcessor;
 
 use app\entity\TmPart;
+use app\models\FileConverter;
 use app\models\PartsRecognizer\BySynonymCodeDetector;
+use app\services\FileService;
 
-class SynonymFileProcessor extends AbstractFileProcessor
+class XslxFileProcessor extends AbstractFileProcessor
 {
+    protected function prepareFile()
+    {
+        FileConverter::convertXslxToCsv(
+            $this->filePath, FileService::getBatchDir($this->fileName)
+        );
+    }
+
     public function processRows()
     {
-        $filename = $this->getRealFilePath();
-
-        $data = $this->parseCsvFile($filename);
+        $data = $this->parseCsvFile($this->filePath);
         $this->stat->totalRows = sizeof($data);
-
+        var_export($data);
+        die;
         foreach ($data as &$row) {
             $name = isset($row[$this->nameColumn])
                 ? $row[$this->nameColumn]
