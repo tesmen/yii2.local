@@ -75,7 +75,7 @@ trait ControllerTrait
     private function getResult($value = [], $message = '', $isSuccessful = true)
     {
         return [
-            'data'    => $value,
+            'data' => $value,
             'success' => $isSuccessful,
             'message' => $message,
         ];
@@ -148,24 +148,45 @@ trait ControllerTrait
      * @param bool $addBom
      * @return bool
      */
-//    private function csvFileResponse($fileName, array $rows, $delimiter = ',', $addBom = true)
-//    {
-//        Http::forceDownload($fileName);
-//        $output = fopen('php://output', 'w');
-//
-//        if ($addBom) {
-//            $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility
-//            fputs($output, $BOM);
-//        }
-//
-//        foreach ($rows as $row) {
-//            fputcsv($output, $row, $delimiter);
-//        }
-//
-//        Application::instance()->stop();
-//
-//        return true;
-//    }
+    private function csvFileResponse($fileName, array $rows, $delimiter = ',', $addBom = true)
+    {
+        $this->forceDownload($fileName);
+        $output = fopen('php://output', 'w');
+
+        if ($addBom) {
+            $BOM = chr(0xEF) . chr(0xBB) . chr(0xBF); // excel and others compatibility
+            fputs($output, $BOM);
+        }
+
+        foreach ($rows as $row) {
+            fputcsv($output, $row, $delimiter);
+        }
+
+        return $this->stopApplication();
+    }
+
+    /**
+     * @return bool
+     */
+    private function stopApplication(){
+        die;
+    }
+
+    private function forceDownload($baseFileName, $fileSize = false)
+    {
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . $baseFileName . '"');
+        header('Content-Transfer-Encoding: binary');
+        header('Connection: Keep-Alive');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+
+        if ($fileSize) {
+            header('Content-Length: ' . $fileSize);
+        }
+    }
 
     /**
      * @param $callback

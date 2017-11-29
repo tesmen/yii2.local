@@ -40,6 +40,15 @@ class SmartFileProcessor
     /**
      * @return ProcessedFileStat
      */
+    public function processAndSaveFile()
+    {
+        $data = $this->processFile();
+
+        $this->saveCsvFile($data, $this->fileName);
+
+        return $this->stat;
+    }
+
     public function processFile()
     {
         $filename = $this->batch
@@ -82,9 +91,7 @@ class SmartFileProcessor
             $this->stat->processedRows++;
         }
 
-        $this->saveCsvFile($data, $this->fileName);
-
-        return $this->stat;
+        return $data;
     }
 
     private function parseCsvFile($file)

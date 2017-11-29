@@ -10,6 +10,7 @@ use app\models\TmPartSynonymModel;
 use app\traits\ControllerTrait;
 use yii\web\Controller;
 use yii\web\UploadedFile;
+use app\services\FileService;
 
 class TmController extends Controller
 {
@@ -29,12 +30,13 @@ class TmController extends Controller
     {
         if (\Yii::$app->request->isPost) {
             $file = UploadedFile::getInstanceByName('file');
-            move_uploaded_file($file->tempName, \app\services\FileService::getBatchDir($file->name));
+            move_uploaded_file($file->tempName, FileService::getBatchDir($file->name));
 
-            $stat = SmartFileProcessor::instance($file->name)
+            $data = SmartFileProcessor::instance($file->name)
                 ->setBatch(true)
                 ->processFile();
-            var_export($stat);
+
+            return $this->csvFileResponse('asd.csv', $data);
         }
 
         return $this->render('tm-parse-file');

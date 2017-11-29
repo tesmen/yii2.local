@@ -17,7 +17,7 @@ class DetectTmPartsCodesController extends Controller
         $stat = SmartFileProcessor::instance($filename)
             ->setCodeColumn(4)
             ->setNameColumn(3)
-            ->processFile();
+            ->processAndSaveFile();
 
         $this->writeln('finish');
 
