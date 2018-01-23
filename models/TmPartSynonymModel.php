@@ -110,6 +110,10 @@ class TmPartSynonymModel
             $q->where("LOWER(tps.name) LIKE LOWER('%{$search->synonym}%')");
         }
 
+        if ($search->obez) {
+            $q->where("LOWER(tp.obez) LIKE LOWER('%{$search->obez}%')");
+        }
+
         return $q;
     }
 }

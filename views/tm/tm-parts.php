@@ -8,15 +8,16 @@
             <div class="col-xs-3">
                 <input class="form-control" placeholder="Код" ng-model="newRecord.code" fast-enter="createPart()">
             </div>
+
             <div class="col-xs-7">
                 <input class="form-control" placeholder="Название" ng-model="newRecord.name" fast-enter="createPart()">
             </div>
+
             <div class="col-xs-2 text-right">
                 <button class="btn btn-sm btn-default btn-success" ng-click="createPart()">
                     Добавить <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
-        </div>
         </div>
 
         <div class="row">
@@ -37,6 +38,11 @@
 
                         <td>
                             <input class="form-control" placeholder="%1206%" ng-model="search.code"
+                                   fast-enter="getData()">
+                        </td>
+
+                        <td>
+                            <input class="form-control" placeholder="%РИДФ%" ng-model="search.obez"
                                    fast-enter="getData()">
                         </td>
 
@@ -67,6 +73,10 @@
                         </td>
 
                         <td class="text-center">
+                            Обозначение
+                        </td>
+
+                        <td class="text-center">
                             Назв. ведомости
                         </td>
 
@@ -86,6 +96,10 @@
 
                         <td>
                             {{row.code}}
+                        </td>
+
+                        <td>
+                            {{row.obez}}
                         </td>
 
                         <td style="word-break: break-all">
