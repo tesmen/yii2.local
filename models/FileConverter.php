@@ -8,7 +8,7 @@ class FileConverter
 {
     public static function convertXslxToCsv($input, $output)
     {
-        $API = new Convertio("df7177eac48cae6559c9990e46417c8d");
+        $API = new Convertio("462533cbdfd192ed98c5ef7bdf08fd24");
 
         return $API
             ->start($input, 'csv')
