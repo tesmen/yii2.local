@@ -42,7 +42,7 @@ class XslxFileProcessor extends AbstractFileProcessor
             }
 
             if (!empty($obozn)) {
-                $obozPart = ByOboznCodeDetector::instance()->detect($name);
+                $obozPart = ByOboznCodeDetector::instance()->detect($obozn);
 
                 if ($obozPart) {
                     $this->stat->processedRows++;
