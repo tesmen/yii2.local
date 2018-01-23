@@ -8,7 +8,7 @@ trait EntityTrait
 {
     /**
      * @param $id
-     * @return ActiveRecord
+     * @return TmPart
      */
     public static function findById($id)
     {

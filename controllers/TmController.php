@@ -9,6 +9,7 @@ use app\models\FileProcessor\SmartFileProcessor;
 use app\models\FileProcessor\SynonymFileProcessor;
 use app\models\FileProcessor\XslxFileProcessor;
 use app\models\Search\SynonymsSearch;
+use app\models\TmPartModel;
 use app\models\TmPartSynonymModel;
 use app\traits\ControllerTrait;
 use yii\web\Controller;
@@ -94,6 +95,14 @@ class TmController extends Controller
         $partId = $this->getQueryParams('id');
 
         return $this->asJson(TmPartSynonymModel::createSafe($name, $partId));
+    }
+
+    public function actionUpdateObez()
+    {
+        $id = $this->getQueryParams('id');
+        $obez = $this->getQueryParams('obez');
+
+        return $this->asJson(TmPartModel::updateObez($id, $obez));
     }
 
     public function actionDeletePartSynonym()

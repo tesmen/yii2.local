@@ -147,6 +147,13 @@
                         <b>Название по ведомости:</b> <br>
                         {{partData.raw_name}}
                     </li>
+
+                    <li class="list-group-item">
+
+                        <b>Обозначение</b> <br>
+                        <input type="text" ng-model="partData.obez">
+                        <button ng-click="saveObez()">Сохранить</button>
+                    </li>
                 </ul>
             </div>
 
@@ -187,6 +194,15 @@
 <script>
     function partsService($http) {
         const BASE_URL = '/tm/';
+
+        this.updateObezPromise = function (id, obez) {
+            return $http({
+                    url: BASE_URL + 'update-obez',
+                    method: "POST",
+                    params: {id: id, obez: obez}
+                }
+            );
+        };
 
         this.getPartsDataPromise = function (search) {
             return $http({
@@ -261,6 +277,18 @@
                     Notification.error('Error....');
                     $scope.getPartData();
                 });
+        };
+
+        $scope.saveObez = function () {
+            partsService.updateObezPromise($scope.partData.id, $scope.partData.obez)
+                .then(function () {
+                        Notification.success('Success');
+                        $scope.getPartData();
+                    },
+                    function () {
+                        Notification.error('Error....');
+                        $scope.getPartData();
+                    });
         };
 
         $scope.updateSynonym = function (name, record) {

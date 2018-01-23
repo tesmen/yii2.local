@@ -36,6 +36,19 @@ class TmPartSynonymModel
         return TmPartSynonym::find()->asArray()->where(['part_id' => $id])->all();
     }
 
+    public static function updateObez($id, $obez)
+    {
+        $rec = TmPart::findById($id);
+
+        if (!$rec) {
+            return false;
+        }
+
+        $rec->obez = $obez;
+
+        return $rec->save();
+    }
+
     public static function getPartData($id)
     {
         $data = TmPart::find()

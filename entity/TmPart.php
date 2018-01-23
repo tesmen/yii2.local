@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property $obozn
  * @property $pn
  * @property $dn
+ * @property $obez
  * @property $rmrs
  * @property $part_type_id
  * @property $material_id
@@ -24,6 +25,8 @@ use yii\db\ActiveRecord;
  */
 class TmPart extends ActiveRecord
 {
+    use EntityTrait;
+
     private static $cache;
 
     public static function tableName()
