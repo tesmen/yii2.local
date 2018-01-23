@@ -3,6 +3,7 @@
 namespace app\models\FileProcessor;
 
 use app\entity\TmPart;
+use app\models\PartsRecognizer\ByOboznCodeDetector;
 use app\models\PartsRecognizer\BySynonymCodeDetector;
 
 class SynonymFileProcessor extends AbstractFileProcessor
@@ -19,6 +20,10 @@ class SynonymFileProcessor extends AbstractFileProcessor
                 ? $row[$this->nameColumn]
                 : null;
 
+            $obozn = isset($row[$this->oboznColumn])
+                ? $row[$this->oboznColumn]
+                : null;
+
             $existedCode = isset($row[$this->codeColumn])
                 ? $row[$this->codeColumn]
                 : null;
@@ -27,6 +32,19 @@ class SynonymFileProcessor extends AbstractFileProcessor
                 $this->stat->skippedRows++;
                 continue;
             }
+
+            if (!empty($obozn)) {
+                $obozPart = ByOboznCodeDetector::instance()->detect($name);
+                var_export($obozPart);die;
+                if ($obozPart) {
+                    $this->stat->processedRows++;
+                    $row[$this->codeColumn] = $obozPart->code;
+                    $row[29] = 'auto-oboz';
+                }
+
+                continue;
+            }
+
 
             $synonymicPart = BySynonymCodeDetector::instance()->detect($name);
 

@@ -14,6 +14,7 @@ abstract class AbstractFileProcessor
     protected $batch;
     protected $codeColumn = 3;
     protected $nameColumn = 7;
+    protected $oboznColumn = 2;
 
     private function __construct($filePath)
     {
@@ -64,6 +65,7 @@ abstract class AbstractFileProcessor
     {
         $this->prepareFile();
         $this->getRows();
+
         return $this->processRows();
     }
 
@@ -144,5 +146,23 @@ abstract class AbstractFileProcessor
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getOboznColumn()
+    {
+        return $this->oboznColumn;
+    }
+
+    /**
+     * @param int $oboznColumn
+     * @return AbstractFileProcessor
+     */
+    public function setOboznColumn($oboznColumn)
+    {
+        $this->oboznColumn = $oboznColumn;
+
+        return $this;
+    }
 
 }

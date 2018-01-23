@@ -40,6 +40,7 @@ class TmController extends Controller
             $data = XslxFileProcessor::instance($uploadedPath)
                 ->setCodeColumn(4)
                 ->setNameColumn(3)
+                ->setOboznColumn(2)
                 ->processFile();
 
             return $this->csvFileResponse($file->name . '.csv', $data);
