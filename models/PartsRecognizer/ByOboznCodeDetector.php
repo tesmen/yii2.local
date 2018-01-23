@@ -32,9 +32,20 @@ class ByOboznCodeDetector implements DetectorInterface
      */
     public function detect($obozn)
     {
-        return TmPart::findBySql(
+        $dot = TmPart::findBySql(
             "SELECT * FROM tm_parts WHERE trim(LOWER(obez)) = trim(LOWER(:str))",
             ['str' => $obozn]
+        )->one();
+
+        if ($dot) {
+            return $dot;
+        }
+
+        $dottlessString = str_replace('.', '', $obozn);
+
+        return TmPart::findBySql(
+            "SELECT * FROM tm_parts WHERE trim(LOWER(obez)) = trim(LOWER(:str))",
+            ['str' => $dottlessString]
         )->one();
     }
 }

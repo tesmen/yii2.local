@@ -14,7 +14,6 @@ use yii\db\ActiveRecord;
  * @property $ident_ved
  * @property $code
  * @property $poz_ved
- * @property $obozn
  * @property $pn
  * @property $dn
  * @property $obez
