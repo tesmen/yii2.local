@@ -31,7 +31,6 @@ class XslxFileProcessor extends AbstractFileProcessor
                 ? $row[$this->oboznColumn]
                 : null;
 
-
             $existedCode = isset($row[$this->codeColumn])
                 ? $row[$this->codeColumn]
                 : null;

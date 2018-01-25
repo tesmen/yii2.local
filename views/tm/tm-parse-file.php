@@ -5,8 +5,9 @@
 <div class="row">
     <div class="col-xs-3">
         <form action="" method="post" enctype="multipart/form-data">
-            Select image to upload:
+            Укажите ТМ
             <input type="file" name="file" id="file">
+            <br>
             <input type="submit" value="Обработать" name="submit">
         </form>
     </div>

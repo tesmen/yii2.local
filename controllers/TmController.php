@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\entity\TmPart;
 use app\entity\TmPartSynonym;
 use app\entity\TmPartType;
+use app\models\FileProcessor\KvzMarker;
 use app\models\FileProcessor\SmartFileProcessor;
 use app\models\FileProcessor\SynonymFileProcessor;
 use app\models\FileProcessor\XslxFileProcessor;
@@ -42,6 +43,12 @@ class TmController extends Controller
                 ->setNameColumn(3)
                 ->setOboznColumn(2)
                 ->processFile();
+
+            $data = KvzMarker::instance(null)
+                ->setCodeColumn(4)
+                ->setNameColumn(3)
+                ->setOboznColumn(2)
+                ->mark($data);
 
             return $this->csvFileResponse($file->name . '.csv', $data);
         }
