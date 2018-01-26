@@ -12,6 +12,7 @@ abstract class AbstractFileProcessor
     protected $fileName;
     protected $stat;
     protected $batch;
+    protected $numColumn = 1;
     protected $kvzColumn = 11;
     protected $codeColumn = 3;
     protected $nameColumn = 7;
@@ -181,6 +182,25 @@ abstract class AbstractFileProcessor
     public function setKvzColumn($kvzColumn)
     {
         $this->kvzColumn = $kvzColumn;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumColumn()
+    {
+        return $this->numColumn;
+    }
+
+    /**
+     * @param int $numColumn
+     * @return AbstractFileProcessor
+     */
+    public function setNumColumn($numColumn)
+    {
+        $this->numColumn = $numColumn;
 
         return $this;
     }

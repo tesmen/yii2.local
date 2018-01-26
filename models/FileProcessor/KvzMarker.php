@@ -16,7 +16,14 @@ class KvzMarker extends AbstractFileProcessor
      */
     public function mark($data)
     {
-        foreach ($data as &$row) {
+        foreach ($data as $index => &$row) {
+            if (isset($data[$index + 1])) {
+                if ((int)($data[$index + 1][$this->numColumn]) === 1) {
+                    $row[$this->kvzColumn] = 'У';
+                    continue;
+                };
+            }
+
             $row[$this->kvzColumn] = $this->getKvzCode($row);
         }
 
