@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e97f1601090f7734904ecd2f56a63bae",
+    "content-hash": "1284c71fe94a4d1108cf4b86068570e1",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -524,6 +524,36 @@
                 "mailer"
             ],
             "time": "2017-09-30T22:39:41+00:00"
+        },
+        {
+            "name": "tesmen/tiny-orm",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tesmen/tiny-orm.git",
+                "reference": "b7db71acebb652a9757400cfedb9a05d52c4f0c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tesmen/tiny-orm/zipball/b7db71acebb652a9757400cfedb9a05d52c4f0c4",
+                "reference": "b7db71acebb652a9757400cfedb9a05d52c4f0c4",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TinyORM\\": "src/TinyORM"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Tesmen",
+                    "email": "tezmo@mail.ru"
+                }
+            ],
+            "description": "PHP tiny ORM lib",
+            "time": "2018-04-05T14:54:25+00:00"
         },
         {
             "name": "yiisoft/yii2",

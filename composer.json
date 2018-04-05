@@ -18,7 +18,8 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "convertio/convertio-php": "^0.4.0"
+        "convertio/convertio-php": "^0.4.0",
+        "tesmen/tiny-orm": "^0.2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",
