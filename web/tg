@@ -1,17 +1,47 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
 <style>
-    body, html{padding: 0;
-        margin: 0;}
+    .top-buffer {
+        margin-top: 20px;
+    }
+
+    .telegram-link {
+        width: 150px;
+    }
 </style>
 
-<div style="margin: auto; text-align: center">
-    <a href="tg://socks?server=nl3%2Eproxy%2Eveesecurity%2Ecom&port=80&user=PROXY_5ACBA80221D5D&pass=8ba400a25adf4200">
-        <!--<span style="font-size:24px">Click to get Telegram proxy</span>-->
+<div class="text-center">Telegram proxies</div>
 
-        <div style="">
-            <img src="/static/tg.png" width="100%">
-        </div>
-        
+<div class="text-center">
+    <div class="top-buffer">
+        <a class="btn btn-default telegram-link"
+           href="tg://socks?server=nl3%2Eproxy%2Eveesecurity%2Ecom&port=80&user=PROXY_5ACBA80221D5D&pass=8ba400a25adf4200">
+            <img src="/static/tg-tr.png" width="50px">
+            E-security
+        </a>
+    </div>
 
-    </a>
+    <div class="top-buffer">
+        <a class="btn btn-default telegram-link"
+           href="tg://socks?server=Ukgjy%2Eteletype%2Elive&port=1080&user=telegram&pass=telegram">
+            <img src="/static/tg-tr.png" width="50px">
+            Teletype
+        </a>
+    </div>
 </div>
-
